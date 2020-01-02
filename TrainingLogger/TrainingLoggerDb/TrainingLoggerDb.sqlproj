@@ -64,5 +64,6 @@
     <Build Include="Tables\Activities.sql" />
     <Build Include="StoredProcedures\AddUser.sql" />
     <Build Include="StoredProcedures\AddActivity.sql" />
+    <Build Include="StoredProcedures\SelectUser.sql" />
   </ItemGroup>
 </Project>
