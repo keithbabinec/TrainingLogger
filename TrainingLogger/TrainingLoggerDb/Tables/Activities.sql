@@ -13,5 +13,9 @@
 	[Notes] NVARCHAR(MAX),
 
 	CONSTRAINT PK_Activities_ID PRIMARY KEY ([ID]),
-	CONSTRAINT FK_Activities_UserID FOREIGN KEY ([UserID]) REFERENCES [dbo].[Users] ([ID])
+	CONSTRAINT FK_Activities_UserID FOREIGN KEY ([UserID]) REFERENCES [dbo].[Users] ([ID]),
+	CONSTRAINT CHK_Activities_Type CHECK ( [Type] >= 0 AND [Type] <= 3),
+	CONSTRAINT CHK_Activities_Purpose CHECK ( [Purpose] >= 0 AND [Purpose] <= 3),
+	CONSTRAINT CHK_Activities_Surface CHECK ( [Surface] >= 0 AND [Surface] <= 5),
+	CONSTRAINT CHK_Activities_AverageIntensity CHECK ( [AverageIntensity] >= 0 AND [AverageIntensity] <= 5)
 )
