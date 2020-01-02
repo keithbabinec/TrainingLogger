@@ -1,17 +1,22 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
 namespace TrainingLoggerApi.Controllers
 {
+    [Route("api/[controller]")]
+    [Authorize("TrainingLoggerUser")]
     [ApiController]
-    [Route("[controller]")]
     public class ActivityController : ControllerBase
     {
-        private readonly ILogger<ActivityController> _logger;
+        private readonly ILogger<ActivityController> Logger;
 
-        public ActivityController(ILogger<ActivityController> logger)
+        public readonly ConfigHelper Config;
+
+        public ActivityController(ILogger<ActivityController> logger, ConfigHelper config)
         {
-            _logger = logger;
+            Logger = logger;
+            Config = config;
         }
     }
 }
