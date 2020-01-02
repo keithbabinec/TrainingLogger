@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrainingLoggerApi", "Traini
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrainingLoggerSharedLibrary", "TrainingLoggerSharedLibrary\TrainingLoggerSharedLibrary.csproj", "{12F68A0F-955F-4AEF-A849-53285FFCE57D}"
 EndProject
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "TrainingLoggerDb", "TrainingLoggerDb\TrainingLoggerDb.sqlproj", "{98BFEA9A-BCAF-45B2-BF7D-684D0777D755}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,12 @@ Global
 		{12F68A0F-955F-4AEF-A849-53285FFCE57D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{12F68A0F-955F-4AEF-A849-53285FFCE57D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{12F68A0F-955F-4AEF-A849-53285FFCE57D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{98BFEA9A-BCAF-45B2-BF7D-684D0777D755}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{98BFEA9A-BCAF-45B2-BF7D-684D0777D755}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{98BFEA9A-BCAF-45B2-BF7D-684D0777D755}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{98BFEA9A-BCAF-45B2-BF7D-684D0777D755}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{98BFEA9A-BCAF-45B2-BF7D-684D0777D755}.Release|Any CPU.Build.0 = Release|Any CPU
+		{98BFEA9A-BCAF-45B2-BF7D-684D0777D755}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
