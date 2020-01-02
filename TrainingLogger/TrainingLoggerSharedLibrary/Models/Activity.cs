@@ -14,7 +14,7 @@ namespace TrainingLoggerSharedLibrary.Models
 
         public TimeSpan Time { get; set; }
 
-        public int Distance { get; set; }
+        public int DistanceInMeters { get; set; }
 
         public HrZoneType AverageIntensity { get; set; }
 
