@@ -34,5 +34,21 @@ namespace TrainingLoggerApi
                 return Configuration["AllowedCorsOrigin"];
             }
         }
+
+        public string KeyVaultUri
+        {
+            get
+            {
+                return Configuration["KeyVaultUri"];
+            }
+        }
+
+        public string DatabaseConnectionStringSecretName
+        {
+            get
+            {
+                return Configuration["DatabaseConnectionStringSecretName"];
+            }
+        }
     }
 }
