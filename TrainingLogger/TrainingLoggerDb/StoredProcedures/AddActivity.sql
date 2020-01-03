@@ -1,10 +1,11 @@
 ﻿CREATE PROCEDURE [dbo].[AddActivity]
 (
-	@UserID					INT,
+	@UserObjectId			UNIQUEIDENTIFIER,
+	@Date					DATE,
 	@Type					INT,
 	@Purpose				INT,
 	@Surface				INT,
-	@Time					BIGINT,
+	@Duration				BIGINT,
 	@DistanceInMeters		INT,
 	@AverageIntensity		INT,
 	@ElevationGain			INT,
@@ -19,9 +20,14 @@ BEGIN
 
 	-- param validation
 
-	IF @UserID IS NULL
+	IF UserObjectId IS NULL
 	BEGIN
-		;THROW 50000, 'UserID must be populated.', 0
+		;THROW 50000, 'UserObjectId must be populated.', 0
+	END
+
+	IF @Date IS NULL
+	BEGIN
+		;THROW 50000, 'Date must be populated.', 0
 	END
 
 	IF @Type IS NULL
@@ -39,9 +45,9 @@ BEGIN
 		;THROW 50000, 'Surface must be populated.', 0
 	END
 
-	IF @Time IS NULL
+	IF @Duration IS NULL
 	BEGIN
-		;THROW 50000, 'Time must be populated.', 0
+		;THROW 50000, 'Duration must be populated.', 0
 	END
 
 	IF @DistanceInMeters IS NULL
@@ -72,12 +78,12 @@ BEGIN
 		
 		INSERT INTO [dbo].[Activities]
 		(
-			[ID],
-			[UserID],
+			[UserObjectId],
+			[Date],
 			[Type],
 			[Purpose],
 			[Surface],
-			[Time],
+			[Duration],
 			[DistanceInMeters],
 			[AverageIntensity],
 			[ElevationGain],
@@ -86,11 +92,12 @@ BEGIN
 		)
 		VALUES
 		(
-			@UserID,
+			@UserObjectId,
+			@Date,
 			@Type,
 			@Purpose,
 			@Surface,
-			@Time,
+			@Duration,
 			@DistanceInMeters,
 			@AverageIntensity,
 			@ElevationGain,
