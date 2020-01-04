@@ -20,7 +20,7 @@ BEGIN
 
 	-- param validation
 
-	IF UserObjectId IS NULL
+	IF @UserObjectId IS NULL
 	BEGIN
 		;THROW 50000, 'UserObjectId must be populated.', 0
 	END
