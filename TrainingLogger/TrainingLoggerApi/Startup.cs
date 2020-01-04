@@ -1,4 +1,6 @@
+using Microsoft.ApplicationInsights;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Azure.KeyVault;
@@ -26,6 +28,8 @@ namespace TrainingLoggerApi
             var config = new ConfigHelper(Configuration);
             services.AddSingleton(config);
 
+            services.AddSingleton<TelemetryClient>();
+
             var kvClientFactory = new KeyVaultClientFactory();
             var kvClient = kvClientFactory.New();
             services.AddSingleton(kvClient);
@@ -38,6 +42,8 @@ namespace TrainingLoggerApi
 
             services.AddSingleton<IDatabase>(dbClient);
 
+            services.AddControllers();
+
             services.AddAuthentication(x =>
             {
                 x.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -48,6 +54,12 @@ namespace TrainingLoggerApi
                 {
                     ValidAudience = config.ValidAudience
                 };
+            });
+
+            services.AddAuthorization(options =>
+            {
+                options.DefaultPolicy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
+                options.AddPolicy("TrainingLoggerUser", policy => policy.RequireRole("TrainingLoggerUser"));
             });
 
             services.AddCors(x =>
@@ -70,8 +82,8 @@ namespace TrainingLoggerApi
             app.UseHsts();
             app.UseHttpsRedirection();
             app.UseRouting();
+            
             app.UseCors(CorsPolicyName);
-
             app.UseAuthentication();
             app.UseAuthorization();
 
