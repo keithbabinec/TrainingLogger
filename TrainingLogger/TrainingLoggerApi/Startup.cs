@@ -1,10 +1,12 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Azure.KeyVault;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
+using TrainingLoggerSharedLibrary.Database;
 
 namespace TrainingLoggerApi
 {
@@ -22,10 +24,19 @@ namespace TrainingLoggerApi
         public void ConfigureServices(IServiceCollection services)
         {
             var config = new ConfigHelper(Configuration);
-
             services.AddSingleton(config);
 
-            services.AddControllers();
+            var kvClientFactory = new KeyVaultClientFactory();
+            var kvClient = kvClientFactory.New();
+            services.AddSingleton(kvClient);
+
+            var dbConnectionString = kvClient.GetSecretAsync(
+                config.KeyVaultUri,
+                config.DatabaseConnectionStringSecretName).GetAwaiter().GetResult();
+
+            var dbClient = new AzureSqlDatabase(dbConnectionString.Value);
+
+            services.AddSingleton<IDatabase>(dbClient);
 
             services.AddAuthentication(x =>
             {
