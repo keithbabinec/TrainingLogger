@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using TrainingLoggerSharedLibrary.Database;
 using TrainingLoggerSharedLibrary.Models;
@@ -33,12 +34,11 @@ namespace TrainingLoggerApi.Controllers
         {
             try
             {
-                // extract the users OID claim from the auth token.
-                // this should be stable for the lifetime of the user.
+                var userObjectId = ClaimsHelper.GetUserObjectIdClaim((ClaimsIdentity)HttpContext.User.Identity);
+                
+                var results = await Database.GetActivitiesByUserAsync(userObjectId).ConfigureAwait(false);
 
-                var userObjectId = "";
-
-                await Database.GetActivitiesByUserAsync(userObjectId).ConfigureAwait(false);
+                return Ok(results);
             }
             catch (ModelValidationException ex)
             {
@@ -50,8 +50,6 @@ namespace TrainingLoggerApi.Controllers
 
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
-
-            return Ok();
         }
 
         [HttpPost()]

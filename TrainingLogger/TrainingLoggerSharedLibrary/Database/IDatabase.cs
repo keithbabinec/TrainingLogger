@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using TrainingLoggerSharedLibrary.Models;
 
 namespace TrainingLoggerSharedLibrary.Database
@@ -7,6 +8,6 @@ namespace TrainingLoggerSharedLibrary.Database
     {
         Task AddActivityAsync(Activity activity);
 
-        Task<Activities> GetActivitiesByUserAsync(string userObjectId);
+        Task<Activities> GetActivitiesByUserAsync(Guid userObjectId);
     }
 }

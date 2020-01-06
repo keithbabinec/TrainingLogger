@@ -19,9 +19,9 @@ namespace TrainingLoggerSharedLibrary.Database
 
         private readonly string DatabaseConnectionString;
 
-        public async Task<Activities> GetActivitiesByUserAsync(string userObjectId)
+        public async Task<Activities> GetActivitiesByUserAsync(Guid userObjectId)
         {
-            if (string.IsNullOrWhiteSpace(userObjectId))
+            if (userObjectId == Guid.Empty)
             {
                 throw new ModelValidationException(nameof(userObjectId) + " must be provided.");
             }
