@@ -62,5 +62,6 @@
   <ItemGroup>
     <Build Include="Tables\Activities.sql" />
     <Build Include="StoredProcedures\AddActivity.sql" />
+    <Build Include="StoredProcedures\GetActivitiesByUser.sql" />
   </ItemGroup>
 </Project>

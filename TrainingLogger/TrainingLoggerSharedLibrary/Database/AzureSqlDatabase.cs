@@ -19,6 +19,57 @@ namespace TrainingLoggerSharedLibrary.Database
 
         private readonly string DatabaseConnectionString;
 
+        public async Task<Activities> GetActivitiesByUserAsync(string userObjectId)
+        {
+            if (string.IsNullOrWhiteSpace(userObjectId))
+            {
+                throw new ModelValidationException(nameof(userObjectId) + " must be provided.");
+            }
+
+            using (SqlConnection sqlcon = new SqlConnection(DatabaseConnectionString))
+            {
+                await sqlcon.OpenAsync().ConfigureAwait(false);
+
+                using (SqlCommand cmd = new SqlCommand())
+                {
+                    cmd.Connection = sqlcon;
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmd.CommandText = "dbo.AddActivity";
+
+                    cmd.Parameters.AddWithValue("@UserObjectId", userObjectId);
+
+                    using (var rdr = await cmd.ExecuteReaderAsync().ConfigureAwait(false))
+                    {
+                        var results = new Activities();
+
+                        if (rdr.HasRows)
+                        {
+                            while (await rdr.ReadAsync().ConfigureAwait(false))
+                            {
+                                results.Add(new Activity()
+                                {
+                                    ID = rdr.GetInt64(0),
+                                    UserObjectId = rdr.GetGuid(1),
+                                    Date = rdr.GetDateTime(2),
+                                    Type = (ActivityType)rdr.GetInt32(3),
+                                    Purpose = (PurposeType)rdr.GetInt32(4),
+                                    Surface = (SurfaceType)rdr.GetInt32(5),
+                                    Duration = TimeSpan.FromTicks(rdr.GetInt64(6)),
+                                    DistanceInMeters = rdr.GetInt32(7),
+                                    AverageIntensity = (HrZoneType)rdr.GetInt32(8),
+                                    ElevationGain = rdr.GetInt32(9),
+                                    ElevationLoss = rdr.GetInt32(10),
+                                    Notes = rdr.GetString(11)
+                                });
+                            }
+                        }
+
+                        return results;
+                    }
+                }
+            }
+        }
+
         public async Task AddActivityAsync(Activity activity)
         {
             // model validation

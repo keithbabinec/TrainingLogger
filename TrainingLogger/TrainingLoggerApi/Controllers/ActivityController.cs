@@ -27,6 +27,33 @@ namespace TrainingLoggerApi.Controllers
             Database = database;
         }
 
+        [HttpGet()]
+        [Route("get/user")]
+        public async Task<ActionResult> GetActivitiesByUser()
+        {
+            try
+            {
+                // extract the users OID claim from the auth token.
+                // this should be stable for the lifetime of the user.
+
+                var userObjectId = "";
+
+                await Database.GetActivitiesByUserAsync(userObjectId).ConfigureAwait(false);
+            }
+            catch (ModelValidationException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                Logger.LogError(ex.ToString());
+
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+
+            return Ok();
+        }
+
         [HttpPost()]
         [Route("add")]
         public async Task<ActionResult> AddActivity([FromBody]Activity activity)
