@@ -349,3 +349,11 @@ MigrationBackup/
 
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
+
+# additional JS project items
+/coverage
+/build
+.env.prod
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
