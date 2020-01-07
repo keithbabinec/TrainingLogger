@@ -351,8 +351,8 @@ MigrationBackup/
 .ionide/
 
 # additional JS project items
-/coverage
-/build
+coverage/
+build/
 .env.prod
 npm-debug.log*
 yarn-debug.log*
