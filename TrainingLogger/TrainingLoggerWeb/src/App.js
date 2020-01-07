@@ -5,7 +5,7 @@ class App extends React.Component {
   render() {
     return (
       <div className="App">
-        Test
+        Logged in as {this.props.user}
       </div>
     );
   }
