@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import * as AuthenticationContext from 'adal-vanilla/lib/adal'
 import App from './App';
+import ApiService from './Services/ApiService'
 import AppSettingsService from './Services/AppSettingsService'
 
 // grab ADAL settings and build the auth context.
@@ -23,10 +24,14 @@ if (authContext.isCallback(window.location.hash)) {
     authContext.handleWindowCallback();
 }
  
-function startApplication(username, token) {
+function startApplication(username, token, appSettings) {
     
+    // construct the api helper.
+    let apiBaseUri = appSettings.GetWebApiUri();
+    let apiService = new ApiService(apiBaseUri, token);
+
     // start the main application.
-    ReactDOM.render(<App user={username} bearerToken={token} settings={appSettings} />, document.getElementById('root'));
+    ReactDOM.render(<App user={username} apiService={apiService} settings={appSettings} />, document.getElementById('root'));
 }
 
 // check the cache for the authenticated user token.
@@ -42,7 +47,7 @@ if (user) {
         authContext.acquireTokenRedirect(clientId, null, null);
     }
     else {
-        startApplication(user.userName, token);
+        startApplication(user.userName, token, appSettings);
     }
 });
 }
