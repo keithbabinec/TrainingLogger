@@ -26,7 +26,7 @@ if (authContext.isCallback(window.location.hash)) {
 function startApplication(username, token) {
     
     // start the main application.
-    ReactDOM.render(<App user={username} bearerToken={token} />, document.getElementById('root'));
+    ReactDOM.render(<App user={username} bearerToken={token} settings={appSettings} />, document.getElementById('root'));
 }
 
 // check the cache for the authenticated user token.
