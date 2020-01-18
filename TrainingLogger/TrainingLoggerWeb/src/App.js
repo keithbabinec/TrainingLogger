@@ -1,5 +1,8 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import Home from './Components/Home/Home';
+import NewActivity from './Components/NewActivity/NewActivity';
+import Reporting from './Components/Reporting/Reporting';
 import './App.css';
 
 class App extends React.Component {
@@ -8,14 +11,14 @@ class App extends React.Component {
       <div className="App">
         <Router>
           <Switch>
-            <Route exact path="/">
-
+            <Route path="/">
+              <Home />
             </Route>
-            <Route exact path="/new-activity">
-
+            <Route path="/new-activity">
+              <NewActivity />
             </Route>
-            <Route exact path="/reporting">
-
+            <Route path="/reporting">
+              <Reporting />
             </Route>
           </Switch>
         </Router>
