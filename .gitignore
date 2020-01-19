@@ -354,6 +354,7 @@ MigrationBackup/
 coverage/
 build/
 .env.prod
+.env.local
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
