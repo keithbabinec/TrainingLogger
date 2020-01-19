@@ -4,6 +4,8 @@ import * as AuthenticationContext from 'adal-vanilla/lib/adal'
 import App from './App';
 import ApiService from './Services/ApiService'
 import AppSettingsService from './Services/AppSettingsService'
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/js/bootstrap.bundle.min';
 
 // grab ADAL settings and build the auth context.
 
