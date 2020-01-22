@@ -38,10 +38,10 @@ class App extends React.Component {
           <div>
             <Switch>
               <Route path="/new-activity">
-                <NewActivity />
+                <NewActivity apiService={this.props.apiService} settings={this.props.settings} />
               </Route>
               <Route path="/reporting">
-                <Reporting />
+                <Reporting apiService={this.props.apiService} settings={this.props.settings} />
               </Route>
               <Route path="/">
                 <Home />
