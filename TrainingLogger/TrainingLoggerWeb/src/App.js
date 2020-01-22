@@ -7,6 +7,8 @@ import './App.css';
 
 class App extends React.Component {
   render() {
+    let username = this.props.user;
+
     return (
       <div className="App">
         <Router>
@@ -24,6 +26,11 @@ class App extends React.Component {
                 </li>
                 <li className="nav-item">
                   <Link to="/reporting" className="nav-link">Reporting</Link>
+                </li>
+              </ul>
+              <ul className="navbar-nav ml-auto">
+                <li className="nav-item Nav-Text-Only">
+                  Logged In: {username}
                 </li>
               </ul>
             </div>
