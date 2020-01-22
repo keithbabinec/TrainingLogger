@@ -1,1 +1,13 @@
-/* NewActivity component CSS */
+.New-Activity-Component-Root {
+    margin: 20px;
+}
+
+.New-Activity-Submission-Form {
+    margin: 10px;
+    max-width: 500px;
+}
+
+.New-Activity-Submit-Button {
+    float: right;
+    min-width: 100px;
+}
