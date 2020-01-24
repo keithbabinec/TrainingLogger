@@ -4,10 +4,18 @@ import './NewActivity.css';
 class NewActivity extends React.Component {
   constructor() {
     super();
-    this.state = {}
+
+    // provide default values
+    this.state = {
+      'dateSelectionField': '',
+      'durationSelection': '00:00:00',
+      'distanceSelection': 0,
+      'elevationGainSelection': 0,
+      'elevationLossSelection': 0,
+      'notesSelectionField': ''
+    }
   }
   onFormFieldChanged = (e) => {
-    console.log('Setting ' + e.target.name + ' to ' + e.target.value);
     this.setState({ [e.target.name]: e.target.value });
   }
   render() {
