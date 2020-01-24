@@ -1,4 +1,5 @@
 import React from 'react';
+import moment from 'moment';
 import './NewActivity.css';
 
 class NewActivity extends React.Component {
@@ -7,7 +8,7 @@ class NewActivity extends React.Component {
 
     // provide default values
     this.state = {
-      'dateSelectionField': '',
+      'dateSelectionField': moment().format('YYYY-MM-DD'),
       'durationSelection': '00:00:00',
       'distanceSelection': 0,
       'elevationGainSelection': 0,
@@ -26,7 +27,7 @@ class NewActivity extends React.Component {
           <div className="form-group row">
             <label htmlFor="dateSelectionField" className="col-sm-2 col-form-label col-form-label-sm">Date</label>
             <div className="col-sm-10">
-              <input type="date" className="form-control form-control-sm" id="dateSelectionField" name="dateSelectionField" value={this.state.dateSelection} onChange={(value) => this.onFormFieldChanged(value)} />
+              <input type="date" className="form-control form-control-sm" id="dateSelectionField" name="dateSelectionField" value={this.state.dateSelectionField} onChange={(value) => this.onFormFieldChanged(value)} />
             </div>
           </div>
           <div className="form-group row">
