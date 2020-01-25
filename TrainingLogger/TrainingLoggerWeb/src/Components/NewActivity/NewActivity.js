@@ -11,7 +11,7 @@ class NewActivity extends React.Component {
     this.state = {
       'dateSelectionField': moment().format('YYYY-MM-DD'),
       'durationSelection': '00:00:00',
-      'distanceSelection': 0,
+      'distanceSelection': "0.0",
       'elevationGainSelection': 0,
       'elevationLossSelection': 0,
       'notesSelectionField': '',
@@ -21,7 +21,8 @@ class NewActivity extends React.Component {
   onFormFieldChanged = (e) => {
     this.setState({ [e.target.name]: e.target.value });
   }
-  onSubmitClicked = () => {
+  onSubmitClicked = (e) => {
+    e.preventDefault();
     this.setState({ 'submissionCompleted': true });
   }
   render() {
@@ -32,7 +33,7 @@ class NewActivity extends React.Component {
     return (
       <div className="New-Activity-Component-Root">
         <h1 className="display-4 text-left">New Activity</h1>
-        <form className="New-Activity-Submission-Form">
+        <form className="New-Activity-Submission-Form" onSubmit={this.onSubmitClicked}>
           <div className="form-group row">
             <label htmlFor="dateSelectionField" className="col-sm-4 col-form-label col-form-label-sm">Date</label>
             <div className="col-sm-8">
@@ -96,13 +97,13 @@ class NewActivity extends React.Component {
             </div>
           </div>
           <div className="form-group row">
-            <label htmlFor="elevationGainSelection" className="col-sm-4 col-form-label col-form-label-sm">Elevation Gain</label>
+            <label htmlFor="elevationGainSelection" className="col-sm-4 col-form-label col-form-label-sm">Elevation Gain <i>(Ft)</i></label>
             <div className="col-sm-8">
               <input type="number" className="form-control form-control-sm" id="elevationGainSelection" name="elevationGainSelection" value={this.state.elevationGainSelection} onChange={(value) => this.onFormFieldChanged(value)} />
             </div>
           </div>
           <div className="form-group row">
-            <label htmlFor="elevationLossSelection" className="col-sm-4 col-form-label col-form-label-sm">Elevation Loss</label>
+            <label htmlFor="elevationLossSelection" className="col-sm-4 col-form-label col-form-label-sm">Elevation Loss <i>(Ft)</i></label>
             <div className="col-sm-8">
               <input type="number" className="form-control form-control-sm" id="elevationLossSelection" name="elevationLossSelection" value={this.state.elevationLossSelection} onChange={(value) => this.onFormFieldChanged(value)} />
             </div>
@@ -113,7 +114,7 @@ class NewActivity extends React.Component {
               <textarea className="form-control form-control-sm" id="notesSelectionField" name="notesSelectionField" rows="3" value={this.state.notesSelectionField} onChange={(value) => this.onFormFieldChanged(value)} ></textarea>
             </div>
           </div>
-          <button className="btn btn-primary New-Activity-Submit-Button" type="submit" onClick={() => this.onSubmitClicked()}>Submit</button>
+          <button className="btn btn-primary New-Activity-Submit-Button" type="submit">Submit</button>
         </form>
       </div>
     );
