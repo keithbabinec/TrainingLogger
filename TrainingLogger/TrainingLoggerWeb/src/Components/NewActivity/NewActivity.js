@@ -4,8 +4,11 @@ import { Redirect } from 'react-router-dom';
 import './NewActivity.css';
 
 class NewActivity extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
+
+    // event binding
+    // this.onSubmitClicked = this.onSubmitClicked.bind(this);
 
     // provide default values
     this.state = {
@@ -15,7 +18,12 @@ class NewActivity extends React.Component {
       'elevationGainSelection': 0,
       'elevationLossSelection': 0,
       'notesSelectionField': '',
-      'submissionCompleted': false
+      'activitySelectField': 'Run',
+      'surfaceSelectField': 'Road',
+      'averageIntensityField': 'Zone1',
+      'purposeSelectField': 'Training',
+      'submissionCompleted': false,
+      'submissionInProgress': false
     }
   }
   onFormFieldChanged = (e) => {
@@ -23,7 +31,40 @@ class NewActivity extends React.Component {
   }
   onSubmitClicked = (e) => {
     e.preventDefault();
-    this.setState({ 'submissionCompleted': true });
+
+    this.setState({ 'submissionInProgress': true });
+
+    // prepare and send new activity payload
+    let newActivity = {
+      'Date': this.state.dateSelectionField,
+      'Type': this.state.activitySelectField,
+      'Purpose': this.state.purposeSelectField,
+      'Surface': this.state.surfaceSelectField,
+      'Duration': this.state.durationSelection,
+      'DistanceInMeters': this.state.distanceSelection,
+      'AverageIntensity': this.state.averageIntensityField,
+      'ElevationGain': this.state.elevationGainSelection,
+      'ElevationLoss': this.state.elevationLossSelection,
+      'Notes': this.state.notesSelectionField
+    };
+
+    // capture a reference to the current 'this' context.
+    // use it to call setState() because after the callback
+    // 'this' will be null.
+    let self = this;
+
+    // call the api
+    this.props.apiService.AddActivity(newActivity)
+      .then(function (response) {
+        self.setState({
+          'submissionCompleted': true,
+          'submissionInProgress': false
+        });
+      })
+      .catch(function (error) {
+        alert(error);
+        self.setState({ 'submissionInProgress': false });
+      })
   }
   render() {
     if (this.state.submissionCompleted === true) {
@@ -114,7 +155,7 @@ class NewActivity extends React.Component {
               <textarea className="form-control form-control-sm" id="notesSelectionField" name="notesSelectionField" rows="3" value={this.state.notesSelectionField} onChange={(value) => this.onFormFieldChanged(value)} ></textarea>
             </div>
           </div>
-          <button className="btn btn-primary New-Activity-Submit-Button" type="submit">Submit</button>
+          <button className="btn btn-primary New-Activity-Submit-Button" type="submit" disabled={this.state.submissionInProgress}>Submit</button>
         </form>
       </div>
     );

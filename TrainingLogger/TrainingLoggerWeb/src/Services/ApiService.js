@@ -40,7 +40,7 @@ class ApiService {
                 return response.data;
             })
             .catch(function (error) {
-                throw Error('An error has occurred calling the api: ' + error);
+                throw Error('Failed to submit the new activity: ' + error);
             });
     }
 }
