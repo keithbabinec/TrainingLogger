@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import Home from './Components/Home/Home';
 import NewActivity from './Components/NewActivity/NewActivity';
+import NewActivitySubmitted from './Components/NewActivitySubmitted/NewActivitySubmitted';
 import Reporting from './Components/Reporting/Reporting';
 import './App.css';
 
@@ -39,6 +40,9 @@ class App extends React.Component {
             <Switch>
               <Route path="/new-activity">
                 <NewActivity apiService={this.props.apiService} settings={this.props.settings} />
+              </Route>
+              <Route path="/new-activity-submitted">
+                <NewActivitySubmitted apiService={this.props.apiService} settings={this.props.settings} />
               </Route>
               <Route path="/reporting">
                 <Reporting apiService={this.props.apiService} settings={this.props.settings} />
