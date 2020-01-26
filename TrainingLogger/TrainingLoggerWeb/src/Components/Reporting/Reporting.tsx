@@ -1,7 +1,8 @@
 import React from 'react';
+import IReportingProps from './IReportingProps';
 import './Reporting.css';
 
-class Reporting extends React.Component {
+class Reporting extends React.Component<IReportingProps, {}> {
   render() {
     return (
       <div className="Reporting">

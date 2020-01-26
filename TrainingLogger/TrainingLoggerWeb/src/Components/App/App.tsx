@@ -1,12 +1,13 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
-import Home from './Components/Home/Home';
-import NewActivity from './Components/NewActivity/NewActivity';
-import NewActivitySubmitted from './Components/NewActivitySubmitted/NewActivitySubmitted';
-import Reporting from './Components/Reporting/Reporting';
+import Home from '../../Components/Home/Home';
+import NewActivity from '../../Components/NewActivity/NewActivity';
+import NewActivitySubmitted from '../../Components/NewActivitySubmitted/NewActivitySubmitted';
+import Reporting from '../../Components/Reporting/Reporting';
+import IAppProps from './IAppProps';
 import './App.css';
 
-class App extends React.Component {
+class App extends React.Component<IAppProps, {}> {
   render() {
     let username = this.props.user;
 
@@ -48,7 +49,7 @@ class App extends React.Component {
                 <Reporting apiService={this.props.apiService} settings={this.props.settings} />
               </Route>
               <Route path="/">
-                <Home />
+                <Home apiService={this.props.apiService} settings={this.props.settings} />
               </Route>
             </Switch>
           </div>

@@ -1,9 +1,10 @@
-import axios from 'axios';
+import axios, { AxiosInstance } from 'axios';
+import IActivity from '../Models/IActivity';
 
 class ApiService {
 
     // constructor that requires a base URI and a bearer token.
-    constructor(baseUri, token) {
+    constructor(baseUri: string, token: string) {
         if (!baseUri) {
             throw new Error('the base uri was not provided');
         }
@@ -21,7 +22,7 @@ class ApiService {
     }
 
     // the authenticated api
-    AuthenticatedApi;
+    AuthenticatedApi: AxiosInstance;
 
     // an api operation that calls one of the authorized endpoints.
     GetActivitiesByUser() {
@@ -34,7 +35,7 @@ class ApiService {
             });
     }
 
-    AddActivity(newActivity) {
+    AddActivity(newActivity: IActivity) {
         return this.AuthenticatedApi.post('/api/activity/add', newActivity)
             .then(function (response) {
                 return response.data;

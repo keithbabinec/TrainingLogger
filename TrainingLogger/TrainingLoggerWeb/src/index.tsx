@@ -1,9 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+
+// @ts-ignore
 import * as AuthenticationContext from 'adal-vanilla/lib/adal'
-import App from './App';
+
+import App from './Components/App/App';
 import ApiService from './Services/ApiService'
 import AppSettingsService from './Services/AppSettingsService'
+
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
 
@@ -11,14 +15,14 @@ import 'bootstrap/dist/js/bootstrap.bundle.min';
 
 let appSettings = new AppSettingsService();
 
-window.adalConfig = {
+(window as any).adalConfig = {
     clientId: appSettings.GetAadClientId(),
     tenant: appSettings.GetAadTenantId(),
     cacheLocation: appSettings.GetBrowserCacheLocation(),
     popUp: false
 };
  
-var authContext = new AuthenticationContext(window.adalConfig);
+var authContext = new AuthenticationContext((window as any).adalConfig);
  
 if (authContext.isCallback(window.location.hash)) {
     
@@ -26,7 +30,7 @@ if (authContext.isCallback(window.location.hash)) {
     authContext.handleWindowCallback();
 }
  
-function startApplication(username, token, appSettings) {
+function startApplication(username: string, token: string, appSettings: AppSettingsService) {
     
     // construct the api helper.
     let apiBaseUri = appSettings.GetWebApiUri();
@@ -42,9 +46,9 @@ function startApplication(username, token, appSettings) {
 var user = authContext.getCachedUser();
  
 if (user) {
-    let clientId = window.adalConfig.clientId;
+    let clientId = (window as any).adalConfig.clientId;
 
-    authContext.acquireToken(clientId, function (errorDesc, token, error) {
+    authContext.acquireToken(clientId, function (errorDesc: any, token: any, error: any) {
     if (error) {
         authContext.acquireTokenRedirect(clientId, null, null);
     }

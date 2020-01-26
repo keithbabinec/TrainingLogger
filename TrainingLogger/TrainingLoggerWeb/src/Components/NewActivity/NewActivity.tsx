@@ -1,14 +1,14 @@
 import React from 'react';
 import moment from 'moment';
 import { Redirect } from 'react-router-dom';
+import INewActivityProps from './INewActivityProps';
+import INewActivityState from './INewActivityState';
+import IActivity from '../../Models/IActivity';
 import './NewActivity.css';
 
-class NewActivity extends React.Component {
-  constructor(props) {
+class NewActivity extends React.Component<INewActivityProps, INewActivityState> {
+  constructor(props: INewActivityProps) {
     super(props);
-
-    // event binding
-    // this.onSubmitClicked = this.onSubmitClicked.bind(this);
 
     // provide default values
     this.state = {
@@ -26,22 +26,24 @@ class NewActivity extends React.Component {
       'submissionInProgress': false
     }
   }
-  onFormFieldChanged = (e) => {
-    this.setState({ [e.target.name]: e.target.value });
+  onFormFieldChanged = (e: any) => {
+    this.setState(
+      { [e.target.name]: e.target.value } as Pick<INewActivityState, keyof INewActivityState>
+    );
   }
-  onSubmitClicked = (e) => {
+  onSubmitClicked = (e: any) => {
     e.preventDefault();
 
     this.setState({ 'submissionInProgress': true });
 
     // prepare and send new activity payload
-    let newActivity = {
+    let newActivity: IActivity = {
       'Date': this.state.dateSelectionField,
       'Type': this.state.activitySelectField,
       'Purpose': this.state.purposeSelectField,
       'Surface': this.state.surfaceSelectField,
       'Duration': this.state.durationSelection,
-      'DistanceInMeters': this.state.distanceSelection,
+      'Distance': this.state.distanceSelection,
       'AverageIntensity': this.state.averageIntensityField,
       'ElevationGain': this.state.elevationGainSelection,
       'ElevationLoss': this.state.elevationLossSelection,
@@ -55,13 +57,13 @@ class NewActivity extends React.Component {
 
     // call the api
     this.props.apiService.AddActivity(newActivity)
-      .then(function (response) {
+      .then(function (response: any) {
         self.setState({
           'submissionCompleted': true,
           'submissionInProgress': false
         });
       })
-      .catch(function (error) {
+      .catch(function (error: any) {
         alert(error);
         self.setState({ 'submissionInProgress': false });
       })
@@ -152,7 +154,7 @@ class NewActivity extends React.Component {
           <div className="form-group row">
             <label htmlFor="notesSelectionField" className="col-sm-4 col-form-label col-form-label-sm">Optional Notes</label>
             <div className="col-sm-8">
-              <textarea className="form-control form-control-sm" id="notesSelectionField" name="notesSelectionField" rows="3" value={this.state.notesSelectionField} onChange={(value) => this.onFormFieldChanged(value)} ></textarea>
+              <textarea className="form-control form-control-sm" id="notesSelectionField" name="notesSelectionField" rows={3} value={this.state.notesSelectionField} onChange={(value) => this.onFormFieldChanged(value)} ></textarea>
             </div>
           </div>
           <button className="btn btn-primary New-Activity-Submit-Button" type="submit" disabled={this.state.submissionInProgress}>Submit</button>
