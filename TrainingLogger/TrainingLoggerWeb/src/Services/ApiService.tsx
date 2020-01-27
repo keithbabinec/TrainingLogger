@@ -26,7 +26,7 @@ class ApiService {
 
     // an api operation that calls one of the authorized endpoints.
     GetActivitiesByUser() {
-        return this.AuthenticatedApi.get('/api/activity/get/user')
+        return this.AuthenticatedApi.get('/activity/get/user')
             .then(function (response) {
                 return response.data;
             })
@@ -36,7 +36,7 @@ class ApiService {
     }
 
     AddActivity(newActivity: IActivity) {
-        return this.AuthenticatedApi.post('/api/activity/add', newActivity)
+        return this.AuthenticatedApi.post('/activity/add', newActivity)
             .then(function (response) {
                 return response.data;
             })
