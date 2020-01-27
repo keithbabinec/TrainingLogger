@@ -25,6 +25,7 @@
     "bootstrap": "^4.4.1",
     "camelcase": "^5.3.1",
     "case-sensitive-paths-webpack-plugin": "2.2.0",
+    "convert-units": "^2.3.4",
     "css-loader": "3.2.0",
     "dotenv": "8.2.0",
     "dotenv-expand": "5.1.0",
