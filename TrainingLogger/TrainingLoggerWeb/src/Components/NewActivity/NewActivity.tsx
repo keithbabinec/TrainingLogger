@@ -2,6 +2,7 @@ import React from 'react';
 import moment from 'moment';
 import convert from 'convert-units';
 import { Redirect } from 'react-router-dom';
+import EnumService from '../../Services/EnumService';
 import INewActivityProps from './INewActivityProps';
 import INewActivityState from './INewActivityState';
 import IActivity from '../../Models/IActivity';
@@ -37,15 +38,19 @@ class NewActivity extends React.Component<INewActivityProps, INewActivityState> 
 
     this.setState({ 'submissionInProgress': true });
 
+    let enums = new EnumService();
+
     // prepare and send new activity payload
     let newActivity: IActivity = {
+      'ID': 0,
+      'UserObjectId': '00000000-0000-0000-0000-000000000000',
       'Date': this.state.dateSelectionField,
-      'Type': this.state.activitySelectField,
-      'Purpose': this.state.purposeSelectField,
-      'Surface': this.state.surfaceSelectField,
+      'Type': enums.ConvertActivityToInt(this.state.activitySelectField),
+      'Purpose': enums.ConvertPurposeToInt(this.state.purposeSelectField),
+      'Surface': enums.ConvertSurfaceToInt(this.state.surfaceSelectField),
       'Duration': this.state.durationSelection,
       'DistanceInMeters': convert(this.state.distanceSelection).from('mi').to('m'),
-      'AverageIntensity': this.state.averageIntensityField,
+      'AverageIntensity': enums.ConvertIntensityToInt(this.state.averageIntensityField),
       'ElevationGain': this.state.elevationGainSelection,
       'ElevationLoss': this.state.elevationLossSelection,
       'Notes': this.state.notesSelectionField

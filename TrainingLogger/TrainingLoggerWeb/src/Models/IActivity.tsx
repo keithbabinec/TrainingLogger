@@ -1,11 +1,13 @@
 interface IActivity {
+    ID: number;
+    UserObjectId: string;
     Date: string;
-    Type: string;
-    Purpose: string;
-    Surface: string;
+    Type: number;
+    Purpose: number;
+    Surface: number;
     Duration: string;
     DistanceInMeters: number;
-    AverageIntensity: string;
+    AverageIntensity: number;
     ElevationGain: number;
     ElevationLoss: number;
     Notes: string
