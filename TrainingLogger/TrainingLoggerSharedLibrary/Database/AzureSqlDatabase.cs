@@ -54,7 +54,7 @@ namespace TrainingLoggerSharedLibrary.Database
                                     Type = (ActivityType)rdr.GetInt32(3),
                                     Purpose = (PurposeType)rdr.GetInt32(4),
                                     Surface = (SurfaceType)rdr.GetInt32(5),
-                                    Duration = TimeSpan.FromTicks(rdr.GetInt64(6)),
+                                    Duration = TimeSpan.FromTicks(rdr.GetInt64(6)).ToString(),
                                     DistanceInMeters = rdr.GetInt32(7),
                                     AverageIntensity = (HrZoneType)rdr.GetInt32(8),
                                     ElevationGain = rdr.GetInt32(9),
@@ -86,13 +86,22 @@ namespace TrainingLoggerSharedLibrary.Database
             {
                 throw new ModelValidationException(nameof(activity.Date) + " must be provided.");
             }
-            if (activity.Duration == TimeSpan.MinValue)
+            if (string.IsNullOrWhiteSpace(activity.Duration))
             {
                 throw new ModelValidationException(nameof(activity.Duration) + " must be provided.");
             }
             if (activity.DistanceInMeters == int.MinValue)
             {
                 throw new ModelValidationException(nameof(activity.DistanceInMeters) + " must be provided.");
+            }
+
+            // convert the timespan type (system.text.json doesn't support it yet)
+
+            var validTimespan = TimeSpan.TryParse(activity.Duration, out TimeSpan parsedTs);
+
+            if (!validTimespan)
+            {
+                throw new ModelValidationException(nameof(activity.Duration) + " must be provided.");
             }
 
             using (SqlConnection sqlcon = new SqlConnection(DatabaseConnectionString))
@@ -110,7 +119,7 @@ namespace TrainingLoggerSharedLibrary.Database
                     cmd.Parameters.AddWithValue("@Type", activity.Type);
                     cmd.Parameters.AddWithValue("@Purpose", activity.Purpose);
                     cmd.Parameters.AddWithValue("@Surface", activity.Surface);
-                    cmd.Parameters.AddWithValue("@Duration", activity.Duration.Ticks);
+                    cmd.Parameters.AddWithValue("@Duration", parsedTs.Ticks);
                     cmd.Parameters.AddWithValue("@DistanceInMeters", activity.DistanceInMeters);
                     cmd.Parameters.AddWithValue("@AverageIntensity", activity.AverageIntensity);
                     cmd.Parameters.AddWithValue("@ElevationGain", activity.ElevationGain);
