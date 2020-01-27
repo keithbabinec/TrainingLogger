@@ -58,6 +58,8 @@ namespace TrainingLoggerApi.Controllers
         {
             try
             {
+                activity.UserObjectId = ClaimsHelper.GetUserObjectIdClaim((ClaimsIdentity)HttpContext.User.Identity);
+
                 await Database.AddActivityAsync(activity).ConfigureAwait(false);
             }
             catch (ModelValidationException ex)
