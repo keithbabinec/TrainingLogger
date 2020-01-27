@@ -1,5 +1,6 @@
 import React from 'react';
 import moment from 'moment';
+import convert from 'convert-units';
 import { Redirect } from 'react-router-dom';
 import INewActivityProps from './INewActivityProps';
 import INewActivityState from './INewActivityState';
@@ -14,7 +15,7 @@ class NewActivity extends React.Component<INewActivityProps, INewActivityState> 
     this.state = {
       'dateSelectionField': moment().format('YYYY-MM-DD'),
       'durationSelection': '00:00:00',
-      'distanceSelection': "0.0",
+      'distanceSelection': 0.0,
       'elevationGainSelection': 0,
       'elevationLossSelection': 0,
       'notesSelectionField': '',
@@ -43,7 +44,7 @@ class NewActivity extends React.Component<INewActivityProps, INewActivityState> 
       'Purpose': this.state.purposeSelectField,
       'Surface': this.state.surfaceSelectField,
       'Duration': this.state.durationSelection,
-      'Distance': this.state.distanceSelection,
+      'DistanceInMeters': convert(this.state.distanceSelection).from('mi').to('m'),
       'AverageIntensity': this.state.averageIntensityField,
       'ElevationGain': this.state.elevationGainSelection,
       'ElevationLoss': this.state.elevationLossSelection,

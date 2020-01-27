@@ -4,7 +4,7 @@ interface IActivity {
     Purpose: string;
     Surface: string;
     Duration: string;
-    Distance: string;
+    DistanceInMeters: number;
     AverageIntensity: string;
     ElevationGain: number;
     ElevationLoss: number;
