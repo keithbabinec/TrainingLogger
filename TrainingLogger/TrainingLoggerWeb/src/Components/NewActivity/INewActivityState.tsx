@@ -4,7 +4,7 @@ interface INewActivityState {
     purposeSelectField: string,
     surfaceSelectField: string,
     durationSelection: string,
-    distanceSelection: number,
+    distanceSelection: string,
     averageIntensityField: string,
     elevationGainSelection: number,
     elevationLossSelection: number,

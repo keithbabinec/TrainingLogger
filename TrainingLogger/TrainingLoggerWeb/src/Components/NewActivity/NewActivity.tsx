@@ -16,7 +16,7 @@ class NewActivity extends React.Component<INewActivityProps, INewActivityState> 
     this.state = {
       'dateSelectionField': moment().format('YYYY-MM-DD'),
       'durationSelection': '00:00:00',
-      'distanceSelection': 0.0,
+      'distanceSelection': '0.0',
       'elevationGainSelection': 0,
       'elevationLossSelection': 0,
       'notesSelectionField': '',
@@ -30,7 +30,9 @@ class NewActivity extends React.Component<INewActivityProps, INewActivityState> 
   }
   onFormFieldChanged = (e: any) => {
     this.setState(
-      { [e.target.name]: e.target.value } as Pick<INewActivityState, keyof INewActivityState>
+      { 
+        [e.target.name]: e.target.type === 'number' ? parseInt(e.target.value) : e.target.value
+      } as Pick<INewActivityState, keyof INewActivityState>
     );
   }
   onSubmitClicked = (e: any) => {
@@ -49,7 +51,7 @@ class NewActivity extends React.Component<INewActivityProps, INewActivityState> 
       'Purpose': enums.ConvertPurposeToInt(this.state.purposeSelectField),
       'Surface': enums.ConvertSurfaceToInt(this.state.surfaceSelectField),
       'Duration': this.state.durationSelection,
-      'DistanceInMeters': convert(this.state.distanceSelection).from('mi').to('m'),
+      'DistanceInMeters': Math.round(convert(parseInt(this.state.distanceSelection)).from('mi').to('m')),
       'AverageIntensity': enums.ConvertIntensityToInt(this.state.averageIntensityField),
       'ElevationGain': this.state.elevationGainSelection,
       'ElevationLoss': this.state.elevationLossSelection,
@@ -130,7 +132,7 @@ class NewActivity extends React.Component<INewActivityProps, INewActivityState> 
           <div className="form-group row">
             <label htmlFor="distanceSelection" className="col-sm-4 col-form-label col-form-label-sm">Distance <i>(Miles)</i></label>
             <div className="col-sm-8">
-              <input type="number" className="form-control form-control-sm" id="distanceSelection" name="distanceSelection" value={this.state.distanceSelection} onChange={(value) => this.onFormFieldChanged(value)} />
+              <input type="text" className="form-control form-control-sm" id="distanceSelection" name="distanceSelection" value={this.state.distanceSelection} onChange={(value) => this.onFormFieldChanged(value)} />
             </div>
           </div>
           <div className="form-group row">
