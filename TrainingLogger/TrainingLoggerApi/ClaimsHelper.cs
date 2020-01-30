@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Security.Claims;
+using TrainingLoggerSharedLibrary.Exceptions;
 
 namespace TrainingLoggerApi
 {
@@ -21,7 +22,7 @@ namespace TrainingLoggerApi
 
             if (oidClaim == null)
             {
-                throw new ApplicationException("Unable to extract the user object ID claim. The provided user identity is missing the 'oid' claim.");
+                throw new ClaimsValidationException("Unable to extract the user object ID claim. The provided user identity is missing the 'oid' claim.", userIdentity.Claims);
             }
             else
             {
@@ -31,7 +32,7 @@ namespace TrainingLoggerApi
                 }
                 else
                 {
-                    throw new ApplicationException($"Unable to extract the user object ID claim. The 'oid' claim was present, but wasnt in the correct format.");
+                    throw new ClaimsValidationException($"Unable to extract the user object ID claim. The 'oid' claim was present, but wasnt in the correct format.", userIdentity.Claims);
                 }
             }
         }

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.Serialization;
 
-namespace TrainingLoggerSharedLibrary.Models
+namespace TrainingLoggerSharedLibrary.Exceptions
 {
     public class ModelValidationException : Exception
     {

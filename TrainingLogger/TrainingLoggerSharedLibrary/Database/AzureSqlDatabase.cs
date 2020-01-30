@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Data.SqlClient;
 using System.Threading.Tasks;
+using TrainingLoggerSharedLibrary.Exceptions;
 using TrainingLoggerSharedLibrary.Models;
 
 namespace TrainingLoggerSharedLibrary.Database

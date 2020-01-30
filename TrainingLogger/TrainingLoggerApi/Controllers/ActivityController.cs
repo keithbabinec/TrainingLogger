@@ -5,8 +5,10 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Security.Claims;
+using System.Text;
 using System.Threading.Tasks;
 using TrainingLoggerSharedLibrary.Database;
+using TrainingLoggerSharedLibrary.Exceptions;
 using TrainingLoggerSharedLibrary.Models;
 
 namespace TrainingLoggerApi.Controllers
@@ -33,15 +35,24 @@ namespace TrainingLoggerApi.Controllers
         [Route("get/user")]
         public async Task<ActionResult> GetActivitiesByUser()
         {
+            var eventProps = GetDefaultCustomProperties();
+
             try
             {
                 var userObjectId = ClaimsHelper.GetUserObjectIdClaim((ClaimsIdentity)HttpContext.User.Identity);
-                
+
                 var results = await Database.GetActivitiesByUserAsync(userObjectId).ConfigureAwait(false);
 
-                Logger.TrackEvent(EventNames.ActivitiesQueriedByUser, GetDefaultCustomProperties());
+                Logger.TrackEvent(EventNames.ActivitiesQueriedByUser, eventProps);
 
                 return Ok(results);
+            }
+            catch (ClaimsValidationException ex)
+            {
+                eventProps.Add("User.Claims", ex.GetClaims());
+                Logger.TrackEvent(EventNames.ClaimsValidationError, eventProps);
+
+                return Unauthorized();
             }
             catch (ModelValidationException ex)
             {
@@ -59,13 +70,26 @@ namespace TrainingLoggerApi.Controllers
         [Route("add")]
         public async Task<ActionResult> AddActivity([FromBody]Activity activity)
         {
+            var eventProps = GetDefaultCustomProperties();
+
             try
             {
                 activity.UserObjectId = ClaimsHelper.GetUserObjectIdClaim((ClaimsIdentity)HttpContext.User.Identity);
 
                 await Database.AddActivityAsync(activity).ConfigureAwait(false);
 
-                Logger.TrackEvent(EventNames.NewActivitySubmitted, GetDefaultCustomProperties());
+                eventProps.Add("ActivityType", activity.Type.ToString());
+                eventProps.Add("ActivityPurpose", activity.Purpose.ToString());
+                eventProps.Add("ActivityDate", activity.Date.ToString());
+
+                Logger.TrackEvent(EventNames.NewActivitySubmitted, eventProps);
+            }
+            catch (ClaimsValidationException ex)
+            {
+                eventProps.Add("User.Claims", ex.GetClaims());
+                Logger.TrackEvent(EventNames.ClaimsValidationError, eventProps);
+
+                return Unauthorized();
             }
             catch (ModelValidationException ex)
             {
@@ -85,7 +109,7 @@ namespace TrainingLoggerApi.Controllers
         {
             return new Dictionary<string, string>()
             {
-                { "Username", HttpContext.User.Identity.Name != null ? HttpContext.User.Identity.Name : "Unknown" }
+                { "User.Name", HttpContext.User.Identity.Name != null ? HttpContext.User.Identity.Name : "Unknown" }
             };
         }
     }
