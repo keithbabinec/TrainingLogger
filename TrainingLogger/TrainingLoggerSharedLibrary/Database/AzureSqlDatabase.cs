@@ -35,7 +35,7 @@ namespace TrainingLoggerSharedLibrary.Database
                 {
                     cmd.Connection = sqlcon;
                     cmd.CommandType = System.Data.CommandType.StoredProcedure;
-                    cmd.CommandText = "dbo.AddActivity";
+                    cmd.CommandText = "dbo.GetActivitiesByUser";
 
                     cmd.Parameters.AddWithValue("@UserObjectId", userObjectId);
 
