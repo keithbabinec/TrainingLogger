@@ -1,11 +1,9 @@
 import React from 'react';
 import moment from 'moment';
-import convert from 'convert-units';
 import { Redirect } from 'react-router-dom';
-import EnumService from '../../Services/EnumService';
+import ModelTranslatorService from '../../Services/ModelTranslatorService';
 import INewActivityProps from './INewActivityProps';
 import INewActivityState from './INewActivityState';
-import IActivity from '../../Models/IActivity';
 import './NewActivity.css';
 
 class NewActivity extends React.Component<INewActivityProps, INewActivityState> {
@@ -40,23 +38,10 @@ class NewActivity extends React.Component<INewActivityProps, INewActivityState> 
 
     this.setState({ 'submissionInProgress': true });
 
-    let enums = new EnumService();
-
     // prepare and send new activity payload
-    let newActivity: IActivity = {
-      'ID': 0,
-      'UserObjectId': '00000000-0000-0000-0000-000000000000',
-      'Date': this.state.dateSelectionField,
-      'Type': enums.ConvertActivityToInt(this.state.activitySelectField),
-      'Purpose': enums.ConvertPurposeToInt(this.state.purposeSelectField),
-      'Surface': enums.ConvertSurfaceToInt(this.state.surfaceSelectField),
-      'Duration': this.state.durationSelection,
-      'DistanceInMeters': Math.round(convert(parseInt(this.state.distanceSelection)).from('mi').to('m')),
-      'AverageIntensity': enums.ConvertIntensityToInt(this.state.averageIntensityField),
-      'ElevationGain': this.state.elevationGainSelection,
-      'ElevationLoss': this.state.elevationLossSelection,
-      'Notes': this.state.notesSelectionField
-    };
+    // convert the form model (state) into a request model object.
+    let modelTranslator = new ModelTranslatorService(); 
+    let newActivity = modelTranslator.INewActivityStateToIActivity(this.state);
 
     // capture a reference to the current 'this' context.
     // use it to call setState() because after the callback
