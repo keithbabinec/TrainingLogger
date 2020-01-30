@@ -1,7 +1,5 @@
-import IActivity from '../../Models/IActivity';
-
 interface IHomeState {
-    recentActivities: IActivity[],
+    recentActivities: [],
     queryInProgress: boolean
 };
 
