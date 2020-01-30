@@ -6,7 +6,7 @@ namespace TrainingLoggerApi
 {
     public static class ClaimsHelper
     {
-        private const string UserObjectIdClaimName = "oid";
+        private const string UserObjectIdClaimName = "http://schemas.microsoft.com/identity/claims/objectidentifier";
 
         public static Guid GetUserObjectIdClaim(ClaimsIdentity userIdentity)
         {
