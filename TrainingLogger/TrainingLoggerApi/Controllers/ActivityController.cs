@@ -1,8 +1,9 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.ApplicationInsights;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using System;
+using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using TrainingLoggerSharedLibrary.Database;
@@ -15,13 +16,13 @@ namespace TrainingLoggerApi.Controllers
     [ApiController]
     public class ActivityController : ControllerBase
     {
-        private readonly ILogger<ActivityController> Logger;
+        private readonly TelemetryClient Logger;
 
         private readonly ConfigHelper Config;
 
         private readonly IDatabase Database;
 
-        public ActivityController(ILogger<ActivityController> logger, ConfigHelper config, IDatabase database)
+        public ActivityController(TelemetryClient logger, ConfigHelper config, IDatabase database)
         {
             Logger = logger;
             Config = config;
@@ -38,6 +39,8 @@ namespace TrainingLoggerApi.Controllers
                 
                 var results = await Database.GetActivitiesByUserAsync(userObjectId).ConfigureAwait(false);
 
+                Logger.TrackEvent(EventNames.ActivitiesQueriedByUser, GetDefaultCustomProperties());
+
                 return Ok(results);
             }
             catch (ModelValidationException ex)
@@ -46,7 +49,7 @@ namespace TrainingLoggerApi.Controllers
             }
             catch (Exception ex)
             {
-                Logger.LogError(ex.ToString());
+                Logger.TrackException(ex);
 
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
@@ -61,6 +64,8 @@ namespace TrainingLoggerApi.Controllers
                 activity.UserObjectId = ClaimsHelper.GetUserObjectIdClaim((ClaimsIdentity)HttpContext.User.Identity);
 
                 await Database.AddActivityAsync(activity).ConfigureAwait(false);
+
+                Logger.TrackEvent(EventNames.NewActivitySubmitted, GetDefaultCustomProperties());
             }
             catch (ModelValidationException ex)
             {
@@ -68,12 +73,20 @@ namespace TrainingLoggerApi.Controllers
             }
             catch (Exception ex)
             {
-                Logger.LogError(ex.ToString());
+                Logger.TrackException(ex);
 
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
 
             return Ok();
+        }
+
+        private Dictionary<string, string> GetDefaultCustomProperties()
+        {
+            return new Dictionary<string, string>()
+            {
+                { "Username", HttpContext.User.Identity.Name != null ? HttpContext.User.Identity.Name : "Unknown" }
+            };
         }
     }
 }
