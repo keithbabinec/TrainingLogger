@@ -1,4 +1,5 @@
 import React from 'react';
+import moment from 'moment';
 import IHomeProps from './IHomeProps';
 import IHomeState from './IHomeState';
 import './Home.css';
@@ -36,22 +37,23 @@ class Home extends React.Component<IHomeProps, IHomeState> {
   render() {
     if (this.state.queryInProgress) {
       return (
-        <div className="Home">
-          Loading recent activities...
+        <div className="Home-Component-Root">
+          <h1 className="display-4 text-left">Recent Activities</h1>
+          <p className="text-left">Loading...</p>
         </div>
       );
     }
     else {
 
       let rows = [];
-
+      
       if (this.state.recentActivities && this.state.recentActivities.length) {
         for (let i = 0; i < this.state.recentActivities.length; i++) {
           let item = this.state.recentActivities[i] as any;
   
           rows.push(
             <tr>
-              <td>{item.date}</td>
+              <td>{moment(item.date).format('YYYY-MM-DD')}</td>
               <td>{item.type}</td>
               <td>{item.purpose}</td>
               <td>{item.surface}</td>
@@ -83,7 +85,8 @@ class Home extends React.Component<IHomeProps, IHomeState> {
       }
 
       return (
-        <div className="Home">
+        <div className="Home-Component-Root">
+          <h1 className="display-4 text-left">Recent Activities</h1>
           <table className="table table-sm table-striped">
             <thead className="thead-dark">
               <tr>
