@@ -6,7 +6,8 @@ class NewActivitySubmitted extends React.Component<INewActivitySubmittedProps, {
   render() {
     return (
       <div className="NewActivitySubmitted">
-          Activity submitted!
+        <h1 className="display-4 text-left">New Activity</h1>
+        <p className="text-left">Activity submitted!</p>
       </div>
     );
   }
