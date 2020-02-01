@@ -1,5 +1,6 @@
 import React from 'react';
 import moment from 'moment';
+import convert from 'convert-units';
 import ActivityType from '../../Models/ActivityType';
 import PurposeType from '../../Models/PurposeType';
 import SurfaceType from '../../Models/SurfaceType';
@@ -62,7 +63,7 @@ class Home extends React.Component<IHomeProps, IHomeState> {
               <td>{PurposeType[item.purpose]}</td>
               <td>{SurfaceType[item.surface]}</td>
               <td>{item.duration}</td>
-              <td>{item.distanceInMeters}</td>
+              <td>{(convert(parseInt(item.distanceInMeters)).from('m').to('mi')).toFixed(2)}</td>
               <td>{HrZoneType[item.averageIntensity]}</td>
               <td>{item.elevationGain}</td>
               <td>{item.elevationLoss}</td>
@@ -99,10 +100,10 @@ class Home extends React.Component<IHomeProps, IHomeState> {
                 <th scope="col">Purpose</th>
                 <th scope="col">Surface</th>
                 <th scope="col">Duration</th>
-                <th scope="col">Distance</th>
+                <th scope="col">Distance <i>(Miles)</i></th>
                 <th scope="col">Intensity</th>
-                <th scope="col">Gain</th>
-                <th scope="col">Loss</th>
+                <th scope="col">Gain <i>(Ft)</i></th>
+                <th scope="col">Loss <i>(Ft)</i></th>
               </tr>
             </thead>
             <tbody>
