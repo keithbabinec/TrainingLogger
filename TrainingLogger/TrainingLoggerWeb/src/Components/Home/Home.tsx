@@ -1,5 +1,9 @@
 import React from 'react';
 import moment from 'moment';
+import ActivityType from '../../Models/ActivityType';
+import PurposeType from '../../Models/PurposeType';
+import SurfaceType from '../../Models/SurfaceType';
+import HrZoneType from '../../Models/HrZoneType';
 import IHomeProps from './IHomeProps';
 import IHomeState from './IHomeState';
 import './Home.css';
@@ -54,12 +58,12 @@ class Home extends React.Component<IHomeProps, IHomeState> {
           rows.push(
             <tr>
               <td>{moment(item.date).format('YYYY-MM-DD')}</td>
-              <td>{item.type}</td>
-              <td>{item.purpose}</td>
-              <td>{item.surface}</td>
+              <td>{ActivityType[item.type]}</td>
+              <td>{PurposeType[item.purpose]}</td>
+              <td>{SurfaceType[item.surface]}</td>
               <td>{item.duration}</td>
               <td>{item.distanceInMeters}</td>
-              <td>{item.averageIntensity}</td>
+              <td>{HrZoneType[item.averageIntensity]}</td>
               <td>{item.elevationGain}</td>
               <td>{item.elevationLoss}</td>
             </tr>

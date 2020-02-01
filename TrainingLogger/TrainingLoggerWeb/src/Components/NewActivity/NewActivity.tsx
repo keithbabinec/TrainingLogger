@@ -1,6 +1,10 @@
 import React from 'react';
 import moment from 'moment';
 import { Redirect } from 'react-router-dom';
+import ActivityType from '../../Models/ActivityType';
+import PurposeType from '../../Models/PurposeType';
+import SurfaceType from '../../Models/SurfaceType';
+import HrZoneType from '../../Models/HrZoneType';
 import ModelTranslatorService from '../../Services/ModelTranslatorService';
 import INewActivityProps from './INewActivityProps';
 import INewActivityState from './INewActivityState';
@@ -18,10 +22,10 @@ class NewActivity extends React.Component<INewActivityProps, INewActivityState> 
       'elevationGainSelection': 0,
       'elevationLossSelection': 0,
       'notesSelectionField': '',
-      'activitySelectField': 'Run',
-      'surfaceSelectField': 'Road',
-      'averageIntensityField': 'Zone1',
-      'purposeSelectField': 'Training',
+      'activitySelectField': ActivityType[ActivityType.Run],
+      'surfaceSelectField': SurfaceType[SurfaceType.Road],
+      'averageIntensityField': HrZoneType[HrZoneType.Zone1],
+      'purposeSelectField': PurposeType[PurposeType.Training],
       'submissionCompleted': false,
       'submissionInProgress': false
     }
@@ -80,9 +84,9 @@ class NewActivity extends React.Component<INewActivityProps, INewActivityState> 
             <label htmlFor="activitySelectField" className="col-sm-4 col-form-label col-form-label-sm">Activity</label>
             <div className="col-sm-8">
               <select className="form-control form-control-sm" id="activitySelectField" name="activitySelectField" value={this.state.activitySelectField} onChange={(value) => this.onFormFieldChanged(value)} >
-                <option>Run</option>
-                <option>Hike</option>
-                <option>Cycle</option>
+                <option>{ActivityType[ActivityType.Run]}</option>
+                <option>{ActivityType[ActivityType.Hike]}</option>
+                <option>{ActivityType[ActivityType.Cycle]}</option>
               </select>
             </div>
           </div>
@@ -90,9 +94,9 @@ class NewActivity extends React.Component<INewActivityProps, INewActivityState> 
             <label htmlFor="purposeSelectField" className="col-sm-4 col-form-label col-form-label-sm">Purpose</label>
             <div className="col-sm-8">
               <select className="form-control form-control-sm" id="purposeSelectField" name="purposeSelectField" value={this.state.purposeSelectField} onChange={(value) => this.onFormFieldChanged(value)} >
-                <option>Training</option>
-                <option>Race</option>
-                <option>Leasure</option>
+                <option>{PurposeType[PurposeType.Training]}</option>
+                <option>{PurposeType[PurposeType.Race]}</option>
+                <option>{PurposeType[PurposeType.Leasure]}</option>
               </select>
             </div>
           </div>
@@ -100,11 +104,11 @@ class NewActivity extends React.Component<INewActivityProps, INewActivityState> 
             <label htmlFor="surfaceSelectField" className="col-sm-4 col-form-label col-form-label-sm">Surface</label>
             <div className="col-sm-8">
               <select className="form-control form-control-sm" id="surfaceSelectField" name="surfaceSelectField" value={this.state.surfaceSelectField} onChange={(value) => this.onFormFieldChanged(value)} >
-                <option>Road</option>
-                <option>Trail</option>
-                <option>Track</option>
-                <option>Treadmill</option>
-                <option>Stepper</option>
+                <option>{SurfaceType[SurfaceType.Road]}</option>
+                <option>{SurfaceType[SurfaceType.Trail]}</option>
+                <option>{SurfaceType[SurfaceType.Track]}</option>
+                <option>{SurfaceType[SurfaceType.Treadmill]}</option>
+                <option>{SurfaceType[SurfaceType.Stepper]}</option>
               </select>
             </div>
           </div>
@@ -124,11 +128,11 @@ class NewActivity extends React.Component<INewActivityProps, INewActivityState> 
             <label htmlFor="averageIntensityField" className="col-sm-4 col-form-label col-form-label-sm">Average Intensity</label>
             <div className="col-sm-8">
               <select className="form-control form-control-sm" id="averageIntensityField" name="averageIntensityField" value={this.state.averageIntensityField} onChange={(value) => this.onFormFieldChanged(value)} >
-                <option>Zone1</option>
-                <option>Zone2</option>
-                <option>Zone3</option>
-                <option>Zone4</option>
-                <option>Zone5</option>
+                <option>{HrZoneType[HrZoneType.Zone1]}</option>
+                <option>{HrZoneType[HrZoneType.Zone2]}</option>
+                <option>{HrZoneType[HrZoneType.Zone3]}</option>
+                <option>{HrZoneType[HrZoneType.Zone4]}</option>
+                <option>{HrZoneType[HrZoneType.Zone5]}</option>
               </select>
             </div>
           </div>
