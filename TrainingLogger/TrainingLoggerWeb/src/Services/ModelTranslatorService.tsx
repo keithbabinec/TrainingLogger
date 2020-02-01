@@ -16,7 +16,7 @@ class ModelTranslatorService {
             'Purpose': PurposeType[value.purposeSelectField as keyof typeof PurposeType],
             'Surface': SurfaceType[value.surfaceSelectField as keyof typeof SurfaceType],
             'Duration': value.durationSelection,
-            'DistanceInMeters': Math.round(convert(parseInt(value.distanceSelection)).from('mi').to('m')),
+            'DistanceInMeters': Math.round(convert(Number(value.distanceSelection)).from('mi').to('m')),
             'AverageIntensity': HrZoneType[value.averageIntensityField as keyof typeof HrZoneType],
             'ElevationGain': value.elevationGainSelection,
             'ElevationLoss': value.elevationLossSelection,
