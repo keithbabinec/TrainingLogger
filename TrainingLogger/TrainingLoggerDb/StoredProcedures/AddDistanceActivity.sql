@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE [dbo].[AddActivity]
+﻿CREATE PROCEDURE [dbo].[AddDistanceActivity]
 (
 	@UserObjectId			UNIQUEIDENTIFIER,
 	@Date					DATE,
@@ -76,7 +76,7 @@ BEGIN
 		
 		BEGIN TRANSACTION
 		
-		INSERT INTO [dbo].[Activities]
+		INSERT INTO [dbo].[DistanceActivities]
 		(
 			[UserObjectId],
 			[Date],

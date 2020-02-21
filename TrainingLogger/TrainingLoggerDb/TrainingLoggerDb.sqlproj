@@ -60,8 +60,11 @@
     <Folder Include="StoredProcedures" />
   </ItemGroup>
   <ItemGroup>
-    <Build Include="Tables\Activities.sql" />
-    <Build Include="StoredProcedures\AddActivity.sql" />
-    <Build Include="StoredProcedures\GetActivitiesByUser.sql" />
+    <Build Include="Tables\DistanceActivities.sql" />
+    <Build Include="StoredProcedures\AddDistanceActivity.sql" />
+    <Build Include="StoredProcedures\GetDistanceActivitiesByUser.sql" />
+    <Build Include="Tables\LiftingActivities.sql" />
+    <Build Include="StoredProcedures\AddLiftingActivity.sql" />
+    <Build Include="StoredProcedures\GetLiftingActivitiesByUser.sql" />
   </ItemGroup>
 </Project>
