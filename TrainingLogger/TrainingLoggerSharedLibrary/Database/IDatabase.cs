@@ -6,7 +6,9 @@ namespace TrainingLoggerSharedLibrary.Database
 {
     public interface IDatabase
     {
-        Task AddActivityAsync(Activity activity);
+        Task AddDistanceActivityAsync(DistanceActivity activity);
+
+        Task AddLiftingActivityAsync(LiftingActivity activity);
 
         Task<Activities> GetActivitiesByUserAsync(Guid userObjectId);
     }

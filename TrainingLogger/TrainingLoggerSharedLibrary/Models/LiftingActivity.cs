@@ -2,7 +2,7 @@
 
 namespace TrainingLoggerSharedLibrary.Models
 {
-    public class Activity
+    public class LiftingActivity
     {
         public long ID { get; set; }
 
@@ -10,21 +10,15 @@ namespace TrainingLoggerSharedLibrary.Models
 
         public DateTime Date { get; set; }
 
-        public ActivityType Type { get; set; }
+        public LiftingActivityType Type { get; set; }
 
-        public PurposeType Purpose { get; set; }
+        public LiftingPurposeType Purpose { get; set; }
 
-        public SurfaceType Surface { get; set; }
+        public LiftingFocusArea FocusArea { get; set; }
 
         public string Duration { get; set; }
 
-        public int DistanceInMeters { get; set; }
-
         public HrZoneType AverageIntensity { get; set; }
-
-        public int ElevationGain { get; set; }
-
-        public int ElevationLoss { get; set; }
 
         public string Notes { get; set; }
     }

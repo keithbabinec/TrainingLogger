@@ -1,6 +1,6 @@
 ﻿namespace TrainingLoggerSharedLibrary.Models
 {
-    public enum PurposeType
+    public enum DistancePurposeType
     {
         Training,
         Race,
