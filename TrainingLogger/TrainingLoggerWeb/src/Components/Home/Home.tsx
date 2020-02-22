@@ -3,6 +3,9 @@ import moment from 'moment';
 import convert from 'convert-units';
 import DistanceActivityType from '../../Models/DistanceActivityType';
 import DistancePurposeType from '../../Models/DistancePurposeType';
+import LiftingActivityType from '../../Models/LiftingActivityType';
+import LiftingPurposeType from '../../Models/LiftingPurposeType';
+import LiftingFocusArea from '../../Models/LiftingFocusArea';
 import SurfaceType from '../../Models/SurfaceType';
 import HrZoneType from '../../Models/HrZoneType';
 import IHomeProps from './IHomeProps';
@@ -14,7 +17,8 @@ class Home extends React.Component<IHomeProps, IHomeState> {
     super(props);
 
     this.state = {
-      recentActivities: [],
+      recentDistanceActivities: [],
+      recentLiftingActivities: [],
       queryInProgress: false
     }
   }
@@ -31,7 +35,8 @@ class Home extends React.Component<IHomeProps, IHomeState> {
       .then(function (response: any) {
         self.setState({
           'queryInProgress': false,
-          'recentActivities': response
+          'recentDistanceActivities': response.distanceActivities,
+          'recentLiftingActivities': response.liftingActivities
         });
       })
       .catch(function (error: any) {
@@ -50,13 +55,13 @@ class Home extends React.Component<IHomeProps, IHomeState> {
     }
     else {
 
-      let rows = [];
+      let distanceRows = [];
       
-      if (this.state.recentActivities && this.state.recentActivities.length) {
-        for (let i = 0; i < this.state.recentActivities.length; i++) {
-          let item = this.state.recentActivities[i] as any;
+      if (this.state.recentDistanceActivities && this.state.recentDistanceActivities.length) {
+        for (let i = 0; i < this.state.recentDistanceActivities.length; i++) {
+          let item = this.state.recentDistanceActivities[i] as any;
   
-          rows.push(
+          distanceRows.push(
             <tr>
               <td>{moment(item.date).format('YYYY-MM-DD')}</td>
               <td>{DistanceActivityType[item.type]}</td>
@@ -72,9 +77,45 @@ class Home extends React.Component<IHomeProps, IHomeState> {
         }
       }
 
-      if (rows.length === 0) {
+      if (distanceRows.length === 0) {
         // push an empty row to indicate we have no activities yet.
-        rows.push(
+        distanceRows.push(
+          <tr>
+            <td>--</td>
+            <td>--</td>
+            <td>--</td>
+            <td>--</td>
+            <td>--</td>
+            <td>--</td>
+            <td>--</td>
+            <td>--</td>
+            <td>--</td>
+          </tr>
+        );
+      }
+
+      let liftingRows = [];
+      
+      if (this.state.recentLiftingActivities && this.state.recentLiftingActivities.length) {
+        for (let i = 0; i < this.state.recentLiftingActivities.length; i++) {
+          let item = this.state.recentLiftingActivities[i] as any;
+  
+          liftingRows.push(
+            <tr>
+              <td>{moment(item.date).format('YYYY-MM-DD')}</td>
+              <td>{LiftingActivityType[item.type]}</td>
+              <td>{LiftingPurposeType[item.purpose]}</td>
+              <td>{LiftingFocusArea[item.focusArea]}</td>
+              <td>{item.duration}</td>
+              <td>{HrZoneType[item.averageIntensity]}</td>
+            </tr>
+          );
+        }
+      }
+
+      if (liftingRows.length === 0) {
+        // push an empty row to indicate we have no activities yet.
+        liftingRows.push(
           <tr>
             <td>--</td>
             <td>--</td>
@@ -91,7 +132,7 @@ class Home extends React.Component<IHomeProps, IHomeState> {
 
       return (
         <div className="Home-Component-Root">
-          <h1 className="display-4 text-left">Recent Activities</h1>
+          <h1 className="display-4 text-left">Recent Distance Activities</h1>
           <table className="table table-sm table-striped">
             <thead className="thead-dark">
               <tr>
@@ -107,7 +148,23 @@ class Home extends React.Component<IHomeProps, IHomeState> {
               </tr>
             </thead>
             <tbody>
-              {rows}
+              {distanceRows}
+            </tbody>
+          </table>
+          <h1 className="display-4 text-left">Recent Lifting Activities</h1>
+          <table className="table table-sm table-striped">
+            <thead className="thead-dark">
+              <tr>
+                <th scope="col">Date</th>
+                <th scope="col">Type</th>
+                <th scope="col">Purpose</th>
+                <th scope="col">Focus Area</th>
+                <th scope="col">Duration</th>
+                <th scope="col">Intensity</th>
+              </tr>
+            </thead>
+            <tbody>
+              {liftingRows}
             </tbody>
           </table>
         </div>
