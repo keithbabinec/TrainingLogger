@@ -27,7 +27,7 @@ class ApiService {
 
     // an api operation that calls one of the authorized endpoints.
     GetActivitiesByUser() {
-        return this.AuthenticatedApi.get('/activity/get/user')
+        return this.AuthenticatedApi.get('/activity/user')
             .then(function (response) {
                 return response.data;
             })
@@ -37,7 +37,7 @@ class ApiService {
     }
 
     AddDistanceActivity(newActivity: IDistanceActivity) {
-        return this.AuthenticatedApi.post('/activity/distance/add', newActivity)
+        return this.AuthenticatedApi.post('/activity/distance', newActivity)
             .then(function (response) {
                 return response.data;
             })
@@ -47,12 +47,32 @@ class ApiService {
     }
 
     AddLiftingActivity(newActivity: ILiftingActivity) {
-        return this.AuthenticatedApi.post('/activity/lifting/add', newActivity)
+        return this.AuthenticatedApi.post('/activity/lifting', newActivity)
             .then(function (response) {
                 return response.data;
             })
             .catch(function (error) {
                 throw Error('Failed to submit the new activity: ' + error);
+            });
+    }
+
+    RemoveDistanceActivity(activityId: number) {
+        return this.AuthenticatedApi.delete('/activity/distance/' + activityId)
+            .then(function (response) {
+                return response.data;
+            })
+            .catch(function (error) {
+                throw Error('Failed to remove the activity: ' + error);
+            });
+    }
+
+    RemoveLiftingActivity(activityId: number) {
+        return this.AuthenticatedApi.delete('/activity/lifting/' + activityId)
+            .then(function (response) {
+                return response.data;
+            })
+            .catch(function (error) {
+                throw Error('Failed to remove the activity: ' + error);
             });
     }
 }

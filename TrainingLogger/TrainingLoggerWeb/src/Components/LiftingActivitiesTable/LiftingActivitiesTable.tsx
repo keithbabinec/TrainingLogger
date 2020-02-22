@@ -24,6 +24,7 @@ class LiftingActivitiesTable extends React.Component<ILiftingActivitiesTableProp
               <td>{LiftingFocusArea[item.focusArea]}</td>
               <td>{item.duration}</td>
               <td>{HrZoneType[item.averageIntensity]}</td>
+              <td><button className="btn btn-secondary Remove-Activity-Submit-Button" onClick={() => this.props.onRemoved(item.id)}>Delete</button></td>
             </tr>
           );
         }
@@ -33,6 +34,7 @@ class LiftingActivitiesTable extends React.Component<ILiftingActivitiesTableProp
         // push an empty row to indicate we have no activities yet.
         liftingRows.push(
           <tr>
+            <td>--</td>
             <td>--</td>
             <td>--</td>
             <td>--</td>
@@ -53,6 +55,7 @@ class LiftingActivitiesTable extends React.Component<ILiftingActivitiesTableProp
                 <th scope="col">Focus Area</th>
                 <th scope="col">Duration</th>
                 <th scope="col">Intensity</th>
+                <th scope="col">Actions</th>
               </tr>
             </thead>
             <tbody>

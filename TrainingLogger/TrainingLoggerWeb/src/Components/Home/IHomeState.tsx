@@ -1,6 +1,6 @@
 interface IHomeState {
-    recentDistanceActivities: [],
-    recentLiftingActivities: [],
+    recentDistanceActivities: any[],
+    recentLiftingActivities: any[],
     queryInProgress: boolean
 };
 

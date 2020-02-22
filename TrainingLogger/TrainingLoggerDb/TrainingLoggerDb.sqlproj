@@ -66,5 +66,7 @@
     <Build Include="Tables\LiftingActivities.sql" />
     <Build Include="StoredProcedures\AddLiftingActivity.sql" />
     <Build Include="StoredProcedures\GetLiftingActivitiesByUser.sql" />
+    <Build Include="StoredProcedures\RemoveDistanceActivity.sql" />
+    <Build Include="StoredProcedures\RemoveLiftingActivity.sql" />
   </ItemGroup>
 </Project>

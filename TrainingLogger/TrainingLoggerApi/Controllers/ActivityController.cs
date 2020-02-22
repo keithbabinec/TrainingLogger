@@ -31,7 +31,7 @@ namespace TrainingLoggerApi.Controllers
         }
 
         [HttpGet()]
-        [Route("get/user")]
+        [Route("user")]
         public async Task<ActionResult> GetActivitiesByUser()
         {
             var eventProps = GetDefaultCustomProperties();
@@ -66,7 +66,7 @@ namespace TrainingLoggerApi.Controllers
         }
 
         [HttpPost()]
-        [Route("distance/add")]
+        [Route("distance")]
         public async Task<ActionResult> AddDistanceActivity([FromBody]DistanceActivity activity)
         {
             var eventProps = GetDefaultCustomProperties();
@@ -105,8 +105,46 @@ namespace TrainingLoggerApi.Controllers
             return Ok();
         }
 
+        [HttpDelete()]
+        [Route("distance/{activityId}")]
+        public async Task<ActionResult> RemoveDistanceActivity([FromRoute]long activityId)
+        {
+            var eventProps = GetDefaultCustomProperties();
+
+            try
+            {
+                var userId = ClaimsHelper.GetUserObjectIdClaim((ClaimsIdentity)HttpContext.User.Identity);
+
+                await Database.RemoveDistanceActivityAsync(activityId, userId).ConfigureAwait(false);
+
+                eventProps.Add("ActivityType", nameof(DistanceActivity));
+                eventProps.Add("ActivityID", activityId.ToString());
+
+                Logger.TrackEvent(EventNames.DistanceActivityRemoved, eventProps);
+            }
+            catch (ClaimsValidationException ex)
+            {
+                eventProps.Add("User.Claims", ex.GetClaims());
+                Logger.TrackEvent(EventNames.ClaimsValidationError, eventProps);
+
+                return Unauthorized();
+            }
+            catch (ModelValidationException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                Logger.TrackException(ex);
+
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+
+            return Ok();
+        }
+
         [HttpPost()]
-        [Route("lifting/add")]
+        [Route("lifting")]
         public async Task<ActionResult> AddLiftingActivity([FromBody]LiftingActivity activity)
         {
             var eventProps = GetDefaultCustomProperties();
@@ -123,6 +161,44 @@ namespace TrainingLoggerApi.Controllers
                 eventProps.Add("ActivityDate", activity.Date.ToString());
 
                 Logger.TrackEvent(EventNames.NewDistanceActivitySubmitted, eventProps);
+            }
+            catch (ClaimsValidationException ex)
+            {
+                eventProps.Add("User.Claims", ex.GetClaims());
+                Logger.TrackEvent(EventNames.ClaimsValidationError, eventProps);
+
+                return Unauthorized();
+            }
+            catch (ModelValidationException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                Logger.TrackException(ex);
+
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+
+            return Ok();
+        }
+
+        [HttpDelete()]
+        [Route("lifting/{activityId}")]
+        public async Task<ActionResult> RemoveLiftingActivity([FromRoute]long activityId)
+        {
+            var eventProps = GetDefaultCustomProperties();
+
+            try
+            {
+                var userId = ClaimsHelper.GetUserObjectIdClaim((ClaimsIdentity)HttpContext.User.Identity);
+
+                await Database.RemoveLiftingActivityAsync(activityId, userId).ConfigureAwait(false);
+
+                eventProps.Add("ActivityType", nameof(DistanceActivity));
+                eventProps.Add("ActivityID", activityId.ToString());
+
+                Logger.TrackEvent(EventNames.LiftingActivityRemoved, eventProps);
             }
             catch (ClaimsValidationException ex)
             {

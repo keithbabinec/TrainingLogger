@@ -1,5 +1,6 @@
 interface ILiftingActivitiesTableProps {
-    activities: any[]
+    activities: any[],
+    onRemoved: any
   };
   
   export default ILiftingActivitiesTableProps;
