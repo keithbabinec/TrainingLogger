@@ -2,7 +2,9 @@
 {
     public class EventNames
     {
-        public const string NewActivitySubmitted = "NewActivitySubmitted";
+        public const string NewDistanceActivitySubmitted = "NewDistanceActivitySubmitted";
+
+        public const string NewLiftingActivitySubmitted = "NewLiftingActivitySubmitted";
 
         public const string ActivitiesQueriedByUser = "ActivitiesQueriedByUser";
 

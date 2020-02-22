@@ -1,6 +1,6 @@
 ﻿namespace TrainingLoggerSharedLibrary.Models
 {
-    public enum ActivityType
+    public enum DistanceActivityType
     {
         Run,
         Hike,

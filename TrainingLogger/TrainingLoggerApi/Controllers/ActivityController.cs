@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Security.Claims;
-using System.Text;
 using System.Threading.Tasks;
 using TrainingLoggerSharedLibrary.Database;
 using TrainingLoggerSharedLibrary.Exceptions;
@@ -67,8 +66,8 @@ namespace TrainingLoggerApi.Controllers
         }
 
         [HttpPost()]
-        [Route("add")]
-        public async Task<ActionResult> AddActivity([FromBody]Activity activity)
+        [Route("distance/add")]
+        public async Task<ActionResult> AddDistanceActivity([FromBody]DistanceActivity activity)
         {
             var eventProps = GetDefaultCustomProperties();
 
@@ -76,13 +75,54 @@ namespace TrainingLoggerApi.Controllers
             {
                 activity.UserObjectId = ClaimsHelper.GetUserObjectIdClaim((ClaimsIdentity)HttpContext.User.Identity);
 
-                await Database.AddActivityAsync(activity).ConfigureAwait(false);
+                await Database.AddDistanceActivityAsync(activity).ConfigureAwait(false);
 
-                eventProps.Add("ActivityType", activity.Type.ToString());
+                eventProps.Add("ActivityType", nameof(DistanceActivity));
+                eventProps.Add("DistanceType", activity.Type.ToString());
                 eventProps.Add("ActivityPurpose", activity.Purpose.ToString());
                 eventProps.Add("ActivityDate", activity.Date.ToString());
 
-                Logger.TrackEvent(EventNames.NewActivitySubmitted, eventProps);
+                Logger.TrackEvent(EventNames.NewDistanceActivitySubmitted, eventProps);
+            }
+            catch (ClaimsValidationException ex)
+            {
+                eventProps.Add("User.Claims", ex.GetClaims());
+                Logger.TrackEvent(EventNames.ClaimsValidationError, eventProps);
+
+                return Unauthorized();
+            }
+            catch (ModelValidationException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                Logger.TrackException(ex);
+
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+
+            return Ok();
+        }
+
+        [HttpPost()]
+        [Route("lifting/add")]
+        public async Task<ActionResult> AddLiftingActivity([FromBody]LiftingActivity activity)
+        {
+            var eventProps = GetDefaultCustomProperties();
+
+            try
+            {
+                activity.UserObjectId = ClaimsHelper.GetUserObjectIdClaim((ClaimsIdentity)HttpContext.User.Identity);
+
+                await Database.AddLiftingActivityAsync(activity).ConfigureAwait(false);
+
+                eventProps.Add("ActivityType", nameof(LiftingActivity));
+                eventProps.Add("LiftingType", activity.Type.ToString());
+                eventProps.Add("ActivityPurpose", activity.Purpose.ToString());
+                eventProps.Add("ActivityDate", activity.Date.ToString());
+
+                Logger.TrackEvent(EventNames.NewDistanceActivitySubmitted, eventProps);
             }
             catch (ClaimsValidationException ex)
             {

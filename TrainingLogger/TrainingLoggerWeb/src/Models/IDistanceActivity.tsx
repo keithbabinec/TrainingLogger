@@ -1,4 +1,4 @@
-interface IActivity {
+interface IDistanceActivity {
     ID: number;
     UserObjectId: string;
     Date: string;
@@ -13,4 +13,4 @@ interface IActivity {
     Notes: string
 }
 
-export default IActivity;
+export default IDistanceActivity;

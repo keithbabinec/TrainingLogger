@@ -1,9 +1,9 @@
 import ApiService from '../../Services/ApiService';
 import AppSettingsService from '../../Services/AppSettingsService';
 
-interface INewActivityProps {
+interface INewDistanceActivityProps {
   apiService: ApiService,
   settings: AppSettingsService
 };
 
-export default INewActivityProps;
+export default INewDistanceActivityProps;

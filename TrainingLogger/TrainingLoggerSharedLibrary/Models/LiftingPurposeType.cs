@@ -1,9 +1,9 @@
 ﻿namespace TrainingLoggerSharedLibrary.Models
 {
-    public enum PurposeType
+    public enum LiftingPurposeType
     {
         Training,
-        Race,
-        Leasure
+        Event,
+        Leisure
     }
 }

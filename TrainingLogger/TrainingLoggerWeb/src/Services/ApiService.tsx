@@ -1,5 +1,6 @@
 import axios, { AxiosInstance } from 'axios';
-import IActivity from '../Models/IActivity';
+import IDistanceActivity from '../Models/IDistanceActivity';
+import ILiftingActivity from '../Models/ILiftingActivity';
 
 class ApiService {
 
@@ -35,8 +36,18 @@ class ApiService {
             });
     }
 
-    AddActivity(newActivity: IActivity) {
-        return this.AuthenticatedApi.post('/activity/add', newActivity)
+    AddDistanceActivity(newActivity: IDistanceActivity) {
+        return this.AuthenticatedApi.post('/activity/distance/add', newActivity)
+            .then(function (response) {
+                return response.data;
+            })
+            .catch(function (error) {
+                throw Error('Failed to submit the new activity: ' + error);
+            });
+    }
+
+    AddLiftingActivity(newActivity: ILiftingActivity) {
+        return this.AuthenticatedApi.post('/activity/lifting/add', newActivity)
             .then(function (response) {
                 return response.data;
             })

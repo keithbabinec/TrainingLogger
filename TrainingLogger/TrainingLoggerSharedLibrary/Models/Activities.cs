@@ -2,7 +2,10 @@
 
 namespace TrainingLoggerSharedLibrary.Models
 {
-    public class Activities : List<Activity>
+    public class Activities
     {
+        public List<DistanceActivity> DistanceActivities { get; set; }
+
+        public List<LiftingActivity> LiftingActivities { get; set; }
     }
 }
