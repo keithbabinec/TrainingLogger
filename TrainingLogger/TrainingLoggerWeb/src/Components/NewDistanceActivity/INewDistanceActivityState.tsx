@@ -1,4 +1,4 @@
-interface INewActivityState {
+interface INewDistanceActivityState {
     dateSelectionField: string,
     activitySelectField: string,
     purposeSelectField: string,
@@ -13,4 +13,4 @@ interface INewActivityState {
     submissionInProgress: boolean
 };
 
-export default INewActivityState;
+export default INewDistanceActivityState;

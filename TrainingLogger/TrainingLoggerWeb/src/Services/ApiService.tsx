@@ -1,5 +1,5 @@
 import axios, { AxiosInstance } from 'axios';
-import IActivity from '../Models/IActivity';
+import IDistanceActivity from '../Models/IDistanceActivity';
 
 class ApiService {
 
@@ -35,7 +35,7 @@ class ApiService {
             });
     }
 
-    AddActivity(newActivity: IActivity) {
+    AddActivity(newActivity: IDistanceActivity) {
         return this.AuthenticatedApi.post('/activity/add', newActivity)
             .then(function (response) {
                 return response.data;

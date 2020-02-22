@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import Home from '../../Components/Home/Home';
-import NewActivity from '../../Components/NewActivity/NewActivity';
+import NewDistanceActivity from '../NewDistanceActivity/NewDistanceActivity';
 import NewActivitySubmitted from '../../Components/NewActivitySubmitted/NewActivitySubmitted';
 import Reporting from '../../Components/Reporting/Reporting';
 import IAppProps from './IAppProps';
@@ -24,7 +24,7 @@ class App extends React.Component<IAppProps, {}> {
                   <Link to="/" className="nav-link">Home</Link>
                 </li>
                 <li className="nav-item">
-                  <Link to="/new-activity" className="nav-link">New Activity</Link>
+                  <Link to="/new-distance-activity" className="nav-link">New Distance Activity</Link>
                 </li>
                 <li className="nav-item">
                   <Link to="/reporting" className="nav-link">Reporting</Link>
@@ -39,8 +39,8 @@ class App extends React.Component<IAppProps, {}> {
           </nav>
           <div>
             <Switch>
-              <Route path="/new-activity">
-                <NewActivity apiService={this.props.apiService} settings={this.props.settings} />
+              <Route path="/new-distance-activity">
+                <NewDistanceActivity apiService={this.props.apiService} settings={this.props.settings} />
               </Route>
               <Route path="/new-activity-submitted">
                 <NewActivitySubmitted apiService={this.props.apiService} settings={this.props.settings} />

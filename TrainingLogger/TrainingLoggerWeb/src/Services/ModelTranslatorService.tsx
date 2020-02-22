@@ -1,19 +1,19 @@
 import convert from 'convert-units';
-import ActivityType from '../Models/ActivityType';
-import PurposeType from '../Models/PurposeType';
+import DistanceActivityType from '../Models/DistanceActivityType';
+import DistancePurposeType from '../Models/DistancePurposeType';
 import SurfaceType from '../Models/SurfaceType';
 import HrZoneType from '../Models/HrZoneType';
-import INewActivityState from '../Components/NewActivity/INewActivityState';
-import IActivity from '../Models/IActivity';
+import INewDistanceActivityState from '../Components/NewDistanceActivity/INewDistanceActivityState';
+import IDistanceActivity from '../Models/IDistanceActivity';
 
 class ModelTranslatorService {
-    INewActivityStateToIActivity(value: INewActivityState): IActivity {
-        let newActivity: IActivity = {
+    INewDistanceActivityStateToIDistanceActivity(value: INewDistanceActivityState): IDistanceActivity {
+        let newActivity: IDistanceActivity = {
             'ID': 0,
             'UserObjectId': '00000000-0000-0000-0000-000000000000',
             'Date': value.dateSelectionField,
-            'Type': ActivityType[value.activitySelectField as keyof typeof ActivityType],
-            'Purpose': PurposeType[value.purposeSelectField as keyof typeof PurposeType],
+            'Type': DistanceActivityType[value.activitySelectField as keyof typeof DistanceActivityType],
+            'Purpose': DistancePurposeType[value.purposeSelectField as keyof typeof DistancePurposeType],
             'Surface': SurfaceType[value.surfaceSelectField as keyof typeof SurfaceType],
             'Duration': value.durationSelection,
             'DistanceInMeters': Math.round(convert(Number(value.distanceSelection)).from('mi').to('m')),

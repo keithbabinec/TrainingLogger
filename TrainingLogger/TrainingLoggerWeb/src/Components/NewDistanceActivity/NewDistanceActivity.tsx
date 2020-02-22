@@ -1,17 +1,17 @@
 import React from 'react';
 import moment from 'moment';
 import { Redirect } from 'react-router-dom';
-import ActivityType from '../../Models/ActivityType';
-import PurposeType from '../../Models/PurposeType';
+import DistanceActivityType from '../../Models/DistanceActivityType';
+import DistancePurposeType from '../../Models/DistancePurposeType';
 import SurfaceType from '../../Models/SurfaceType';
 import HrZoneType from '../../Models/HrZoneType';
 import ModelTranslatorService from '../../Services/ModelTranslatorService';
-import INewActivityProps from './INewActivityProps';
-import INewActivityState from './INewActivityState';
-import './NewActivity.css';
+import INewDistanceActivityProps from './INewDistanceActivityProps';
+import INewDistanceActivityState from './INewDistanceActivityState';
+import './NewDistanceActivity.css';
 
-class NewActivity extends React.Component<INewActivityProps, INewActivityState> {
-  constructor(props: INewActivityProps) {
+class NewDistanceActivity extends React.Component<INewDistanceActivityProps, INewDistanceActivityState> {
+  constructor(props: INewDistanceActivityProps) {
     super(props);
 
     // provide default values
@@ -22,10 +22,10 @@ class NewActivity extends React.Component<INewActivityProps, INewActivityState> 
       'elevationGainSelection': 0,
       'elevationLossSelection': 0,
       'notesSelectionField': '',
-      'activitySelectField': ActivityType[ActivityType.Run],
+      'activitySelectField': DistanceActivityType[DistanceActivityType.Run],
       'surfaceSelectField': SurfaceType[SurfaceType.Road],
       'averageIntensityField': HrZoneType[HrZoneType.Zone1],
-      'purposeSelectField': PurposeType[PurposeType.Training],
+      'purposeSelectField': DistancePurposeType[DistancePurposeType.Training],
       'submissionCompleted': false,
       'submissionInProgress': false
     }
@@ -34,7 +34,7 @@ class NewActivity extends React.Component<INewActivityProps, INewActivityState> 
     this.setState(
       { 
         [e.target.name]: e.target.type === 'number' ? parseInt(e.target.value) : e.target.value
-      } as Pick<INewActivityState, keyof INewActivityState>
+      } as Pick<INewDistanceActivityState, keyof INewDistanceActivityState>
     );
   }
   onSubmitClicked = (e: any) => {
@@ -45,7 +45,7 @@ class NewActivity extends React.Component<INewActivityProps, INewActivityState> 
     // prepare and send new activity payload
     // convert the form model (state) into a request model object.
     let modelTranslator = new ModelTranslatorService(); 
-    let newActivity = modelTranslator.INewActivityStateToIActivity(this.state);
+    let newActivity = modelTranslator.INewDistanceActivityStateToIDistanceActivity(this.state);
 
     // capture a reference to the current 'this' context.
     // use it to call setState() because after the callback
@@ -72,7 +72,7 @@ class NewActivity extends React.Component<INewActivityProps, INewActivityState> 
 
     return (
       <div className="New-Activity-Component-Root">
-        <h1 className="display-4 text-left">New Activity</h1>
+        <h1 className="display-4 text-left">New Distance Activity</h1>
         <form className="New-Activity-Submission-Form" onSubmit={this.onSubmitClicked}>
           <div className="form-group row">
             <label htmlFor="dateSelectionField" className="col-sm-4 col-form-label col-form-label-sm">Date</label>
@@ -84,9 +84,9 @@ class NewActivity extends React.Component<INewActivityProps, INewActivityState> 
             <label htmlFor="activitySelectField" className="col-sm-4 col-form-label col-form-label-sm">Activity</label>
             <div className="col-sm-8">
               <select className="form-control form-control-sm" id="activitySelectField" name="activitySelectField" value={this.state.activitySelectField} onChange={(value) => this.onFormFieldChanged(value)} >
-                <option>{ActivityType[ActivityType.Run]}</option>
-                <option>{ActivityType[ActivityType.Hike]}</option>
-                <option>{ActivityType[ActivityType.Cycle]}</option>
+                <option>{DistanceActivityType[DistanceActivityType.Run]}</option>
+                <option>{DistanceActivityType[DistanceActivityType.Hike]}</option>
+                <option>{DistanceActivityType[DistanceActivityType.Cycle]}</option>
               </select>
             </div>
           </div>
@@ -94,9 +94,9 @@ class NewActivity extends React.Component<INewActivityProps, INewActivityState> 
             <label htmlFor="purposeSelectField" className="col-sm-4 col-form-label col-form-label-sm">Purpose</label>
             <div className="col-sm-8">
               <select className="form-control form-control-sm" id="purposeSelectField" name="purposeSelectField" value={this.state.purposeSelectField} onChange={(value) => this.onFormFieldChanged(value)} >
-                <option>{PurposeType[PurposeType.Training]}</option>
-                <option>{PurposeType[PurposeType.Race]}</option>
-                <option>{PurposeType[PurposeType.Leasure]}</option>
+                <option>{DistancePurposeType[DistancePurposeType.Training]}</option>
+                <option>{DistancePurposeType[DistancePurposeType.Race]}</option>
+                <option>{DistancePurposeType[DistancePurposeType.Leasure]}</option>
               </select>
             </div>
           </div>
@@ -161,4 +161,4 @@ class NewActivity extends React.Component<INewActivityProps, INewActivityState> 
   }
 }
 
-export default NewActivity;
+export default NewDistanceActivity;
