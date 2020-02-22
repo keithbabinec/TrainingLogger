@@ -251,7 +251,7 @@ namespace TrainingLoggerSharedLibrary.Database
                     cmd.CommandType = System.Data.CommandType.StoredProcedure;
                     cmd.CommandText = "dbo.RemoveLiftingActivity";
 
-                    cmd.Parameters.AddWithValue("@UserObjectId", userId);
+                    cmd.Parameters.AddWithValue("@UserId", userId);
                     cmd.Parameters.AddWithValue("@ActivityId", activityId);
 
                     await cmd.ExecuteNonQueryAsync().ConfigureAwait(false);
@@ -282,7 +282,7 @@ namespace TrainingLoggerSharedLibrary.Database
                     cmd.CommandType = System.Data.CommandType.StoredProcedure;
                     cmd.CommandText = "dbo.RemoveDistanceActivity";
 
-                    cmd.Parameters.AddWithValue("@UserObjectId", userId);
+                    cmd.Parameters.AddWithValue("@UserId", userId);
                     cmd.Parameters.AddWithValue("@ActivityId", activityId);
 
                     await cmd.ExecuteNonQueryAsync().ConfigureAwait(false);

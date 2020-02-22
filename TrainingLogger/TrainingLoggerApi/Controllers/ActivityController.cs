@@ -106,7 +106,7 @@ namespace TrainingLoggerApi.Controllers
         }
 
         [HttpDelete()]
-        [Route("distance/{0}")]
+        [Route("distance/{activityId}")]
         public async Task<ActionResult> RemoveDistanceActivity([FromRoute]long activityId)
         {
             var eventProps = GetDefaultCustomProperties();
@@ -184,7 +184,7 @@ namespace TrainingLoggerApi.Controllers
         }
 
         [HttpDelete()]
-        [Route("lifting/{0}")]
+        [Route("lifting/{activityId}")]
         public async Task<ActionResult> RemoveLiftingActivity([FromRoute]long activityId)
         {
             var eventProps = GetDefaultCustomProperties();
