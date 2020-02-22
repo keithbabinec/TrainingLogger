@@ -149,6 +149,7 @@ namespace TrainingLoggerSharedLibrary.Database
                     cmd.Parameters.AddWithValue("@Date", activity.Date);
                     cmd.Parameters.AddWithValue("@Type", activity.Type);
                     cmd.Parameters.AddWithValue("@Purpose", activity.Purpose);
+                    cmd.Parameters.AddWithValue("@FocusArea", activity.FocusArea);
                     cmd.Parameters.AddWithValue("@Duration", parsedTs.Ticks);
                     cmd.Parameters.AddWithValue("@AverageIntensity", activity.AverageIntensity);
 

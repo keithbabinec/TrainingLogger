@@ -1,7 +1,7 @@
 enum DistancePurposeType {
     Training = 0,
     Race = 1,
-    Leasure = 2
+    Leisure = 2
 }
 
 export default DistancePurposeType;

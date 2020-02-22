@@ -4,6 +4,6 @@
     {
         Training,
         Race,
-        Leasure
+        Leisure
     }
 }

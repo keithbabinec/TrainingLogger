@@ -96,7 +96,7 @@ class NewDistanceActivity extends React.Component<INewDistanceActivityProps, INe
               <select className="form-control form-control-sm" id="purposeSelectField" name="purposeSelectField" value={this.state.purposeSelectField} onChange={(value) => this.onFormFieldChanged(value)} >
                 <option>{DistancePurposeType[DistancePurposeType.Training]}</option>
                 <option>{DistancePurposeType[DistancePurposeType.Race]}</option>
-                <option>{DistancePurposeType[DistancePurposeType.Leasure]}</option>
+                <option>{DistancePurposeType[DistancePurposeType.Leisure]}</option>
               </select>
             </div>
           </div>
