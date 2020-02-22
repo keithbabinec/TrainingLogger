@@ -28,6 +28,7 @@ class DistanceActivitiesTable extends React.Component<IDistanceActivitiesTablePr
                     <td>{HrZoneType[item.averageIntensity]}</td>
                     <td>{item.elevationGain}</td>
                     <td>{item.elevationLoss}</td>
+                    <td><button className="btn btn-secondary Remove-Activity-Submit-Button" onClick={() => this.props.onRemoved(item.id)}>Delete</button></td>
                 </tr>
             );
         }
@@ -37,6 +38,7 @@ class DistanceActivitiesTable extends React.Component<IDistanceActivitiesTablePr
         // push an empty row to indicate we have no activities yet.
         distanceRows.push(
             <tr>
+            <td>--</td>
             <td>--</td>
             <td>--</td>
             <td>--</td>
@@ -63,6 +65,7 @@ class DistanceActivitiesTable extends React.Component<IDistanceActivitiesTablePr
                 <th scope="col">Intensity</th>
                 <th scope="col">Gain <i>(Ft)</i></th>
                 <th scope="col">Loss <i>(Ft)</i></th>
+                <th scope="col">Actions</th>
                 </tr>
             </thead>
             <tbody>

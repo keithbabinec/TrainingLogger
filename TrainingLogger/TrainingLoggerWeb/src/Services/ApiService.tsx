@@ -55,6 +55,26 @@ class ApiService {
                 throw Error('Failed to submit the new activity: ' + error);
             });
     }
+
+    RemoveDistanceActivity(activityId: number) {
+        return this.AuthenticatedApi.delete('/activity/distance/' + activityId)
+            .then(function (response) {
+                return response.data;
+            })
+            .catch(function (error) {
+                throw Error('Failed to remove the activity: ' + error);
+            });
+    }
+
+    RemoveLiftingActivity(activityId: number) {
+        return this.AuthenticatedApi.delete('/activity/lifting/' + activityId)
+            .then(function (response) {
+                return response.data;
+            })
+            .catch(function (error) {
+                throw Error('Failed to remove the activity: ' + error);
+            });
+    }
 }
 
 export default ApiService;

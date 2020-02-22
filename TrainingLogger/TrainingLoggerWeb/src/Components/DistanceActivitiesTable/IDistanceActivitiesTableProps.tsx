@@ -1,5 +1,6 @@
 interface IDistanceActivitiesTableProps {
-  activities: any[]
+  activities: any[],
+  onRemoved: any
 };
 
 export default IDistanceActivitiesTableProps;
