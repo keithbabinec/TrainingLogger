@@ -1,31 +1,28 @@
 import React from 'react';
 import moment from 'moment';
 import { Redirect } from 'react-router-dom';
-import DistanceActivityType from '../../Models/DistanceActivityType';
-import DistancePurposeType from '../../Models/DistancePurposeType';
-import SurfaceType from '../../Models/SurfaceType';
+import LiftingActivityType from '../../Models/LiftingActivityType';
+import LiftingPurposeType from '../../Models/LiftingPurposeType';
+import LiftingFocusArea from '../../Models/LiftingFocusArea';
 import HrZoneType from '../../Models/HrZoneType';
 import ModelTranslatorService from '../../Services/ModelTranslatorService';
-import INewDistanceActivityProps from './INewDistanceActivityProps';
-import INewDistanceActivityState from './INewDistanceActivityState';
-import './NewDistanceActivity.css';
+import INewLiftingActivityProps from './INewLiftingActivityProps';
+import INewLiftingActivityState from './INewLiftingActivityState';
+import './NewLiftingActivity.css';
 
-class NewDistanceActivity extends React.Component<INewDistanceActivityProps, INewDistanceActivityState> {
-  constructor(props: INewDistanceActivityProps) {
+class NewLiftingActivity extends React.Component<INewLiftingActivityProps, INewLiftingActivityState> {
+  constructor(props: INewLiftingActivityProps) {
     super(props);
 
     // provide default values
     this.state = {
       'dateSelectionField': moment().format('YYYY-MM-DD'),
       'durationSelection': '00:00:00',
-      'distanceSelection': '0.0',
-      'elevationGainSelection': 0,
-      'elevationLossSelection': 0,
       'notesSelectionField': '',
-      'activitySelectField': DistanceActivityType[DistanceActivityType.Run],
-      'surfaceSelectField': SurfaceType[SurfaceType.Road],
+      'activitySelectField': LiftingActivityType[LiftingActivityType.Powerlifting],
+      'focusSelectField': LiftingFocusArea[LiftingFocusArea.FullBody],
       'averageIntensityField': HrZoneType[HrZoneType.Zone1],
-      'purposeSelectField': DistancePurposeType[DistancePurposeType.Training],
+      'purposeSelectField': LiftingPurposeType[LiftingPurposeType.Training],
       'submissionCompleted': false,
       'submissionInProgress': false
     }
@@ -34,7 +31,7 @@ class NewDistanceActivity extends React.Component<INewDistanceActivityProps, INe
     this.setState(
       { 
         [e.target.name]: e.target.type === 'number' ? parseInt(e.target.value) : e.target.value
-      } as Pick<INewDistanceActivityState, keyof INewDistanceActivityState>
+      } as Pick<INewLiftingActivityState, keyof INewLiftingActivityState>
     );
   }
   onSubmitClicked = (e: any) => {
@@ -45,7 +42,7 @@ class NewDistanceActivity extends React.Component<INewDistanceActivityProps, INe
     // prepare and send new activity payload
     // convert the form model (state) into a request model object.
     let modelTranslator = new ModelTranslatorService(); 
-    let newActivity = modelTranslator.INewDistanceActivityStateToIDistanceActivity(this.state);
+    let newActivity = modelTranslator.INewLiftingActivityStateToILiftingActivity(this.state);
 
     // capture a reference to the current 'this' context.
     // use it to call setState() because after the callback
@@ -53,7 +50,7 @@ class NewDistanceActivity extends React.Component<INewDistanceActivityProps, INe
     let self = this;
 
     // call the api
-    this.props.apiService.AddDistanceActivity(newActivity)
+    this.props.apiService.AddLiftingActivity(newActivity)
       .then(function (response: any) {
         self.setState({
           'submissionCompleted': true,
@@ -72,7 +69,7 @@ class NewDistanceActivity extends React.Component<INewDistanceActivityProps, INe
 
     return (
       <div className="New-Activity-Component-Root">
-        <h1 className="display-4 text-left">New Distance Activity</h1>
+        <h1 className="display-4 text-left">New Lifting Activity</h1>
         <form className="New-Activity-Submission-Form" onSubmit={this.onSubmitClicked}>
           <div className="form-group row">
             <label htmlFor="dateSelectionField" className="col-sm-4 col-form-label col-form-label-sm">Date</label>
@@ -84,9 +81,9 @@ class NewDistanceActivity extends React.Component<INewDistanceActivityProps, INe
             <label htmlFor="activitySelectField" className="col-sm-4 col-form-label col-form-label-sm">Activity</label>
             <div className="col-sm-8">
               <select className="form-control form-control-sm" id="activitySelectField" name="activitySelectField" value={this.state.activitySelectField} onChange={(value) => this.onFormFieldChanged(value)} >
-                <option>{DistanceActivityType[DistanceActivityType.Run]}</option>
-                <option>{DistanceActivityType[DistanceActivityType.Hike]}</option>
-                <option>{DistanceActivityType[DistanceActivityType.Cycle]}</option>
+                <option>{LiftingActivityType[LiftingActivityType.Powerlifting]}</option>
+                <option>{LiftingActivityType[LiftingActivityType.Olympic]}</option>
+                <option>{LiftingActivityType[LiftingActivityType.Strongman]}</option>
               </select>
             </div>
           </div>
@@ -94,21 +91,26 @@ class NewDistanceActivity extends React.Component<INewDistanceActivityProps, INe
             <label htmlFor="purposeSelectField" className="col-sm-4 col-form-label col-form-label-sm">Purpose</label>
             <div className="col-sm-8">
               <select className="form-control form-control-sm" id="purposeSelectField" name="purposeSelectField" value={this.state.purposeSelectField} onChange={(value) => this.onFormFieldChanged(value)} >
-                <option>{DistancePurposeType[DistancePurposeType.Training]}</option>
-                <option>{DistancePurposeType[DistancePurposeType.Race]}</option>
-                <option>{DistancePurposeType[DistancePurposeType.Leasure]}</option>
+                <option>{LiftingPurposeType[LiftingPurposeType.Training]}</option>
+                <option>{LiftingPurposeType[LiftingPurposeType.Event]}</option>
+                <option>{LiftingPurposeType[LiftingPurposeType.Leisure]}</option>
               </select>
             </div>
           </div>
           <div className="form-group row">
-            <label htmlFor="surfaceSelectField" className="col-sm-4 col-form-label col-form-label-sm">Surface</label>
+            <label htmlFor="focusSelectField" className="col-sm-4 col-form-label col-form-label-sm">Focus Area</label>
             <div className="col-sm-8">
-              <select className="form-control form-control-sm" id="surfaceSelectField" name="surfaceSelectField" value={this.state.surfaceSelectField} onChange={(value) => this.onFormFieldChanged(value)} >
-                <option>{SurfaceType[SurfaceType.Road]}</option>
-                <option>{SurfaceType[SurfaceType.Trail]}</option>
-                <option>{SurfaceType[SurfaceType.Track]}</option>
-                <option>{SurfaceType[SurfaceType.Treadmill]}</option>
-                <option>{SurfaceType[SurfaceType.Stepper]}</option>
+              <select className="form-control form-control-sm" id="focusSelectField" name="focusSelectField" value={this.state.focusSelectField} onChange={(value) => this.onFormFieldChanged(value)} >
+                <option>{LiftingFocusArea[LiftingFocusArea.FullBody]}</option>
+                <option>{LiftingFocusArea[LiftingFocusArea.Push]}</option>
+                <option>{LiftingFocusArea[LiftingFocusArea.Pull]}</option>
+                <option>{LiftingFocusArea[LiftingFocusArea.Legs]}</option>
+                <option>{LiftingFocusArea[LiftingFocusArea.Arms]}</option>
+                <option>{LiftingFocusArea[LiftingFocusArea.Chest]}</option>
+                <option>{LiftingFocusArea[LiftingFocusArea.Back]}</option>
+                <option>{LiftingFocusArea[LiftingFocusArea.Shoulders]}</option>
+                <option>{LiftingFocusArea[LiftingFocusArea.Core]}</option>
+                <option>{LiftingFocusArea[LiftingFocusArea.Other]}</option>
               </select>
             </div>
           </div>
@@ -116,12 +118,6 @@ class NewDistanceActivity extends React.Component<INewDistanceActivityProps, INe
             <label htmlFor="durationSelection" className="col-sm-4 col-form-label col-form-label-sm">Duration <i>(HH:MM:SS)</i></label>
             <div className="col-sm-8">
               <input type="text" className="form-control form-control-sm" id="durationSelection" name="durationSelection" value={this.state.durationSelection} onChange={(value) => this.onFormFieldChanged(value)} />
-            </div>
-          </div>
-          <div className="form-group row">
-            <label htmlFor="distanceSelection" className="col-sm-4 col-form-label col-form-label-sm">Distance <i>(Miles)</i></label>
-            <div className="col-sm-8">
-              <input type="text" className="form-control form-control-sm" id="distanceSelection" name="distanceSelection" value={this.state.distanceSelection} onChange={(value) => this.onFormFieldChanged(value)} />
             </div>
           </div>
           <div className="form-group row">
@@ -137,18 +133,6 @@ class NewDistanceActivity extends React.Component<INewDistanceActivityProps, INe
             </div>
           </div>
           <div className="form-group row">
-            <label htmlFor="elevationGainSelection" className="col-sm-4 col-form-label col-form-label-sm">Elevation Gain <i>(Ft)</i></label>
-            <div className="col-sm-8">
-              <input type="number" className="form-control form-control-sm" id="elevationGainSelection" name="elevationGainSelection" value={this.state.elevationGainSelection} onChange={(value) => this.onFormFieldChanged(value)} />
-            </div>
-          </div>
-          <div className="form-group row">
-            <label htmlFor="elevationLossSelection" className="col-sm-4 col-form-label col-form-label-sm">Elevation Loss <i>(Ft)</i></label>
-            <div className="col-sm-8">
-              <input type="number" className="form-control form-control-sm" id="elevationLossSelection" name="elevationLossSelection" value={this.state.elevationLossSelection} onChange={(value) => this.onFormFieldChanged(value)} />
-            </div>
-          </div>
-          <div className="form-group row">
             <label htmlFor="notesSelectionField" className="col-sm-4 col-form-label col-form-label-sm">Optional Notes</label>
             <div className="col-sm-8">
               <textarea className="form-control form-control-sm" id="notesSelectionField" name="notesSelectionField" rows={3} value={this.state.notesSelectionField} onChange={(value) => this.onFormFieldChanged(value)} ></textarea>
@@ -161,4 +145,4 @@ class NewDistanceActivity extends React.Component<INewDistanceActivityProps, INe
   }
 }
 
-export default NewDistanceActivity;
+export default NewLiftingActivity;
