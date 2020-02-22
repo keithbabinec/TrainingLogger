@@ -31,7 +31,7 @@ namespace TrainingLoggerApi.Controllers
         }
 
         [HttpGet()]
-        [Route("get/user")]
+        [Route("user")]
         public async Task<ActionResult> GetActivitiesByUser()
         {
             var eventProps = GetDefaultCustomProperties();
@@ -66,7 +66,7 @@ namespace TrainingLoggerApi.Controllers
         }
 
         [HttpPost()]
-        [Route("distance/add")]
+        [Route("distance")]
         public async Task<ActionResult> AddDistanceActivity([FromBody]DistanceActivity activity)
         {
             var eventProps = GetDefaultCustomProperties();
@@ -106,7 +106,7 @@ namespace TrainingLoggerApi.Controllers
         }
 
         [HttpPost()]
-        [Route("lifting/add")]
+        [Route("lifting")]
         public async Task<ActionResult> AddLiftingActivity([FromBody]LiftingActivity activity)
         {
             var eventProps = GetDefaultCustomProperties();
