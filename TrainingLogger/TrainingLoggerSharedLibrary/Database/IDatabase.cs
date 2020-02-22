@@ -11,5 +11,9 @@ namespace TrainingLoggerSharedLibrary.Database
         Task AddLiftingActivityAsync(LiftingActivity activity);
 
         Task<Activities> GetActivitiesByUserAsync(Guid userObjectId);
+
+        Task RemoveLiftingActivityAsync(long activityId, Guid userId);
+        
+        Task RemoveDistanceActivityAsync(long activityId, Guid userId);
     }
 }

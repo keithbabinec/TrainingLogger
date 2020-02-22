@@ -227,5 +227,67 @@ namespace TrainingLoggerSharedLibrary.Database
                 }
             }
         }
+
+        public async Task RemoveLiftingActivityAsync(long activityId, Guid userId)
+        {
+            // model validation
+
+            if (activityId <= 0)
+            {
+                throw new ModelValidationException(nameof(activityId) + " must be provided.");
+            }
+            if (userId == Guid.Empty)
+            {
+                throw new ModelValidationException(nameof(userId) + " must be provided.");
+            }
+
+            using (SqlConnection sqlcon = new SqlConnection(DatabaseConnectionString))
+            {
+                await sqlcon.OpenAsync().ConfigureAwait(false);
+
+                using (SqlCommand cmd = new SqlCommand())
+                {
+                    cmd.Connection = sqlcon;
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmd.CommandText = "dbo.RemoveLiftingActivity";
+
+                    cmd.Parameters.AddWithValue("@UserObjectId", userId);
+                    cmd.Parameters.AddWithValue("@ActivityId", activityId);
+
+                    await cmd.ExecuteNonQueryAsync().ConfigureAwait(false);
+                }
+            }
+        }
+
+        public async Task RemoveDistanceActivityAsync(long activityId, Guid userId)
+        {
+            // model validation
+
+            if (activityId <= 0)
+            {
+                throw new ModelValidationException(nameof(activityId) + " must be provided.");
+            }
+            if (userId == Guid.Empty)
+            {
+                throw new ModelValidationException(nameof(userId) + " must be provided.");
+            }
+
+            using (SqlConnection sqlcon = new SqlConnection(DatabaseConnectionString))
+            {
+                await sqlcon.OpenAsync().ConfigureAwait(false);
+
+                using (SqlCommand cmd = new SqlCommand())
+                {
+                    cmd.Connection = sqlcon;
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmd.CommandText = "dbo.RemoveDistanceActivity";
+
+                    cmd.Parameters.AddWithValue("@UserObjectId", userId);
+                    cmd.Parameters.AddWithValue("@ActivityId", activityId);
+
+                    await cmd.ExecuteNonQueryAsync().ConfigureAwait(false);
+                }
+            }
+        }
     }
 }
