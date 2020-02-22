@@ -39,9 +39,6 @@ class LiftingActivitiesTable extends React.Component<ILiftingActivitiesTableProp
             <td>--</td>
             <td>--</td>
             <td>--</td>
-            <td>--</td>
-            <td>--</td>
-            <td>--</td>
           </tr>
         );
       }
